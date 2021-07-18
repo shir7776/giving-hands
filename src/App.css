@@ -1,0 +1,85 @@
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.div.styles_loginContainer__1OP_F.button{
+width: 5000px;
+} */
+
+
+
+body {
+
+  padding: 20px;
+  margin: 0;
+}
+body#main{
+
+  background-image: linear-gradient(45deg, #6bd4ff, rgba(107, 212, 255, 0.6), rgba(107, 212, 255, 0.36), rgba(82, 103, 207, 0.73), rgba(107, 212, 255, 0.36), rgba(107, 212, 255, 0.6));
+}
+h1, h2, p, ul, li {
+  font-family: sans-serif;
+}
+ul.header li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+}
+ul.header {
+  background-color: #111;
+  padding: 0;
+}
+ul.header li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+.content {
+  background-color: #FFF;
+  padding: 20px;
+}
+.content h2 {
+  padding: 0;
+  margin: 0;
+}
+.content li {
+  margin-bottom: 10px;
+}
+.Logo {
+  background-image: url(./logo.jpg);
+  width: 118px;
+}
+input{
+  -webkit-appearance: checkbox !important;
+}
+/* label{*/
+/*  position: relative !important;*/
+/*  display: inline!important;*/
+/*  pointer-events: auto!important;*/
+/*}*/

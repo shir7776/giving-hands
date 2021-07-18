@@ -1,0 +1,19 @@
+
+.box select {
+    background-color: #0563af;
+    color: white;
+    padding: 12px;
+    width: 250px;
+    border: none;
+    font-size: 18px;
+
+    /*-webkit-appearance: button;*/
+    outline: none;
+}
+
+
+
+
+.box select option {
+    padding: 30px;
+}

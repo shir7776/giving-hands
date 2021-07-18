@@ -1,0 +1,11 @@
+npm install --save react-google-maps
+
+npm install react-input-checkbox --save
+
+ npm install material-table
+    npm install @material-ui/core
+
+    AlzaSyb059mo6rMe4ChzmBqEQ8gz9QmWjg_X38c
+    146653417dc40600b770657167573d0d306a666
+
+

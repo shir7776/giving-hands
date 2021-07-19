@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // import { Checkbox } from 'react-input-checkbox';
 import { Checkbox } from '@material-ui/core';
 import Table from "./table_component"
-// import MaterialTable from "material-table";
+//import MaterialTable from "material-table";
 import MyMapComponent from "./map_component"
 // import Geocode from "react-geocode";
 const mapStyles = {

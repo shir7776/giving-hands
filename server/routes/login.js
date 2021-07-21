@@ -1,12 +1,12 @@
 const express = require('express');
 var router = express.Router();
 const bcrypt=require('bcrypt');
-var nodemailer = require('nodemailer');
 
 
-//need to creat a new data base....
+
+
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://shir123:shir123@flowercluster.e9nsj.mongodb.net/flowers";
+var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 
 //for login google
 const passport = require("passport");
@@ -19,14 +19,14 @@ passport.use(new GoogleStrategy());
 
 router.post('/login',async function(req, res) {
     try{
-      var name = req.body.name;
+      var email = req.body.email;
       var password = req.body.password;
-      if (name && password) {
+      if (email && password) {
         if (email.length > 0 && password.length > 0) {
           MongoClient.connect(url, function(err, db) {
             if (err) throw err;
-            var dbo = db.db("flowers");
-            dbo.collection("users").find({name:req.body.name}).toArray(function(err, result) {
+            var dbo = db.db("helpHend");
+            dbo.collection("users").find({email:req.body.email}).toArray(function(err, result) {
               if (err) throw err;
               console.log(result[0]);
               if(result && bcrypt.compare(password,result[0].password)){
@@ -34,8 +34,8 @@ router.post('/login',async function(req, res) {
                    status: 'success',
                    data:'true',
                    type:result[0].type,
-                   first_name:result[0]['first-name'],
-                   last_name:result[0]['last-name']
+                   first_name:result[0][fname],
+                   last_name:result[0][lname]
                  });
                }
                else{

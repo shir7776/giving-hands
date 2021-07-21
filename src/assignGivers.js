@@ -70,6 +70,7 @@ export class AssignGivers extends Component {
             })
         },1000);
         console.log("hahahahh")
+        this.nonUsedareas()
     }
 
     nonUsedareas=()=> {

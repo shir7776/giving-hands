@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import createApiClient from './api'
+import createApiClient from '../api'
 import { BrowserRouter as Router, Switch,  Redirect} from 'react-router-dom';
 import LoginModal from "react-login-modal";
-import logo from "./logo.jpg"
+import logo from "../logo.jpg"
 import {
   Route,
   NavLink,
   HashRouter
 } from "react-router-dom";
-import Home from "./homePage";
-import AssignGivers from "./assignGivers";
-import GiversManagement from "./giversManagement";
-import GiveConfirmation from "./giveConfirmation";
-import locationManagement from "./locationManagement";
-import Statistics from "./statistics";
-import Blog from "./blog";
+import Home from "../routs/home/homePage";
+import AssignGivers from "../routs/assignGivers/assignGivers";
+import GiversManagement from "../routs/giversMenagement/giversManagement";
+import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";
+import locationManagement from "../routs/locationMenagement/locationManagement";
+import Statistics from "../routs/statistics/statistics";
+import Blog from "../routs/blog/blog";
 
 const api = createApiClient
 class App extends Component {

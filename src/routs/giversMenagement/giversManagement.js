@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "./table_component.js"
+import Table from "../../components/table/table_component.js"
 class GiversManagement extends Component {
     constructor() {
         super();

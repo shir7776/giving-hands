@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Table from "./table_component"
-import MyMapComponent from "./map_component"
+import Table from "../../components/table/table_component"
+import MyMapComponent from "../../components/map/map_component"
 // import Geocode from "react-geocode";
 const mapStyles = {
     width: '50%',

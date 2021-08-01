@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Table from "./table_component"
-import MyMapComponent from "./map_component"
+import Table from "../../components/table/table_component"
+import MyMapComponent from "../../components/map/map_component"
 
 // const API_KEY = "AIzaSyDfrwgbMjQlwceSAE46w-U45KQld2Gi7sY"
 class UpdateGiver extends Component {
@@ -43,6 +43,7 @@ class UpdateGiver extends Component {
 
     }
     getLocationsList=()=>{
+fetch("")
         let lst=[
             {address:"1", lat:31,lng:35,id:1,area:1,finished:false,date:Date.now()},
             {address:"2", lat:32,lng:35,id:2,area:2,finished:false,date:Date.now()},

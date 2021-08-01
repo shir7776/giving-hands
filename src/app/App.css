@@ -72,7 +72,7 @@ ul.header li a {
   margin-bottom: 10px;
 }
 .Logo {
-  background-image: url(./logo.jpg);
+  background-image: url(../logo.jpg);
   width: 118px;
 }
 input{

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { withScriptjs, withGoogleMap, GoogleMap, Marker,InfoWindow } from "react-google-maps"
-import MyMapComponent from "./map_component"
+import MyMapComponent from "../../components/map/map_component"
 // import "./checkbox.css"
 
 class Statistics extends Component {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import createApiClient from '../api'
+import createApiClient from './api'
 import { BrowserRouter as Router, Switch,  Redirect} from 'react-router-dom';
 import LoginModal from "react-login-modal";
-import logo from "../logo.jpg"
+import logo from "./logo.jpg"
 import {
   Route,
   NavLink,

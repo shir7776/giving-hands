@@ -17,7 +17,8 @@ import GiversManagement from "../routs/giversMenagement/giversManagement";
 import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";
 import locationManagement from "../routs/locationMenagement/locationManagement";
 import Statistics from "../routs/statistics/statistics";
-import Blog from "../routs/blog/blog";
+//import Blog from "../routs/blog/blog";
+import {Blog} from "../routs/blog/blogs";
 
 const api = createApiClient
 class App extends Component {

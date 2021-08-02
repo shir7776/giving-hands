@@ -10,7 +10,8 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-import Home from "../routs/home/homePage";
+//import Home from "../routs/home/homePage";
+import {Home} from "../routs/home/home_page";
 import AssignGivers from "../routs/assignGivers/assignGivers";
 import GiversManagement from "../routs/giversMenagement/giversManagement";
 import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";

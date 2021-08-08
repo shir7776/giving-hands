@@ -12,7 +12,8 @@ import {
 } from "react-router-dom";
 //import Home from "../routs/home/homePage";
 import {Home} from "../routs/home/home_page";
-import AssignGivers from "../routs/assignGivers/assignGivers";
+// import AssignGivers from "../routs/assignGivers/assignGivers";
+import {AssignGivers} from "../routs/assignGivers/assign_givers";
 import GiversManagement from "../routs/giversMenagement/giversManagement";
 import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";
 import locationManagement from "../routs/locationMenagement/locationManagement";

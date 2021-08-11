@@ -11,8 +11,9 @@ router.post('/addNewBlog',async function(req, res,next) {
     try{
         var blog=[];
         blog[0]= req.body.id_blog;
-        blog[1]= req.body.email;
-        blog[2] = req.body.blog;
+        blog[1]= req.body.title;
+        blog[2] = req.body.content;
+        blog[3] = req.body.email;
    MongoClient.connect(url, function(err, db) {
        if (err) throw err;
        var dbo = db.db("helpHend");

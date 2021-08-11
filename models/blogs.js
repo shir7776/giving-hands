@@ -5,8 +5,9 @@ module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
         id_blog: { type: String, required: true,unique: true, index: true },
-        email: { type: String, required: true },
-        blog: { type: String, required: true }
+        title: { type: String, required: true },
+        content: { type: String, required: true },
+        email: { type: String, required: true }
        
 
     }, { autoIndex: false });
@@ -23,8 +24,9 @@ module.exports = db => {
     schema.statics.CREATE = async function(blog) {
         return this.create({
             id_blog: blog[0],
-            email: blog[1],
-            blog: blog[2]
+            title: blog[1],
+            content: blog[2],
+            email:blog[3]
             
         });
     };

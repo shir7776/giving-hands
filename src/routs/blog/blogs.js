@@ -26,6 +26,19 @@ export const Blog = () => {
             </ul>
         </div>);
     };
+    const allThePosts=()=>{
+        console.log("in all the post function")
+        fetch("/blogs.json")
+        .then(response => response.json())
+        .then(json => {
+            // the json data. (you can change the values for output.)
+            console.log("in all the post function")
+            const list=json;
+            renderPosts(list);
+    }).catch((error) => {
+        console.log("error");
+      });
+};
 
 
     const posts = [
@@ -71,7 +84,7 @@ export const Blog = () => {
                                      setContent={setContent}/>}
             </header>
             <div>
-                {posts ? renderPosts(posts) : <h2>Loading..</h2>}
+                { posts ? allThePosts() : <h2>Loading..</h2>}
 
             </div>
             </body>

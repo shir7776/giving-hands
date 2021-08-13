@@ -1,5 +1,5 @@
 import React from "react";
-
+//I DONT THINK WE NEED THIS COMPONENT ANYMORE!!
 export const NewGiver=(props)=>{
 
         return (

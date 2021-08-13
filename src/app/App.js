@@ -10,13 +10,16 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-//import Home from "../routs/home/homePage";
+// import Home from "../routs/home/homePage";
 import {Home} from "../routs/home/home_page";
 // import AssignGivers from "../routs/assignGivers/assignGivers";
 import {AssignGivers} from "../routs/assignGivers/assign_givers";
-import GiversManagement from "../routs/giversMenagement/giversManagement";
-import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";
-import locationManagement from "../routs/locationMenagement/locationManagement";
+// import GiversManagement from "../routs/giversMenagement/giversManagement";
+import {GiversManagement} from "../routs/giversMenagement/givers_management";
+// import GiveConfirmation from "../routs/giveComfirmation/giveConfirmation";
+import {GiveConfirmation} from "../routs/giveComfirmation/give_confirmation";
+// import locationManagement from "../routs/locationMenagement/locationManagement";
+import {LocationManagement} from "../routs/locationMenagement/location_management";
 import Statistics from "../routs/statistics/statistics";
 //import Blog from "../routs/blog/blog";
 import {Blog} from "../routs/blog/blogs";
@@ -66,7 +69,7 @@ class App extends Component {
             <Route path="/assignGivers" component={AssignGivers}/>
             <Route path="/giversManagement" component={GiversManagement}/>
             <Route path="/giveConfirmation" component={GiveConfirmation}/>
-            <Route path="/locationManagement" component={locationManagement}/>
+            <Route path="/locationManagement" component={LocationManagement}/>
             <Route path="/statistics" component={Statistics}/>
             <Route path="/blog" component={Blog}/>
           </div>

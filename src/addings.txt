@@ -9,3 +9,4 @@ npm install react-input-checkbox --save
     146653417dc40600b770657167573d0d306a666
 
 
+npm install @material-ui/core@4.11.4

@@ -1,17 +1,12 @@
 import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import Table from "../../components/table/table_component";
+import {locationAPI} from "../../API/locationAPI";
 
 export const LocationManagement = () => {
     const getLocations = () => {
+        return locationAPI.getLocations()
 
-        const lst = [
-            {address: "1", lat: 31, lng: 35, id: 1, area: 1, finished: false},
-            {address: "2", lat: 32, lng: 35, id: 2, area: 2, finished: false},
-            {address: "3", lat: 31, lng: 34, id: 3, area: 3, finished: false},
-            {address: "4", lat: 31.5, lng: 34.5, id: 4, area: 3, finished: false}
-        ]
-        return lst;
     }
     const [locationList, setLocationList] = React.useState(getLocations())
     const [selectedMarker, setSelectedMarker] = useState(false)
@@ -57,14 +52,12 @@ export const LocationManagement = () => {
         return lst;
     }
 
-    const updateLocation = (lst) => {
-        console.log("hahahahh")
+    const updateLocation = (location) => {
+        locationAPI.updateLocation(location)
     }
     const addLocation = async (newRow) => {
         const location = await getCoordinates(newRow.address)
         if (location) {
-
-
             const newRow2 =
                 {
                     id: newRow.id,
@@ -76,12 +69,13 @@ export const LocationManagement = () => {
                     date: Date.now()
                 }
             setLocationList(prevArray => [...prevArray, newRow2])
+            locationAPI.addLocation(location)
         }
         else{
             alert("could not find this address :(")
         }
     }
-    const deleteLocation = (lst) => {
+    const deleteLocation = (location) => {
         console.log("hahahahh")
     }
     const handleClick = (marker, event) => {

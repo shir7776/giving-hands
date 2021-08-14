@@ -2,22 +2,11 @@ import MyMapComponent from "../../components/map/map_component";
 import Table from "../../components/table/table_component";
 import React, {useState} from "react";
 import {locationAPI} from "../../API/locationAPI";
+import {giversAPI} from "../../API/giversAPI";
 
 export const AssignGivers = (props) => {
-    const getGiversList = () => {
-        let lst = [
-            {id: 1, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 2, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 3, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 4, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 5, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 6, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1},
-            {id: 7, name: "rgte", phone: 23, email: "sdfgsdfg", area: 1}
 
-        ]
-        return lst;
-    }
-    const [givers, setGivers] = useState(getGiversList())
+    const [givers, setGivers] = useState(giversAPI.getGivers())
     const getAreaList = () => {
         const lst = [1, 2, 3, 4, 5]
         return lst.filter(area => !givers
@@ -49,6 +38,7 @@ export const AssignGivers = (props) => {
         setAreaList(areaList.filter(area => !givers
             .some(giver => Number(giver.area) === area)))
         nonUsedAreas()
+        giversAPI.updateGiver(giver)
     }
 
 

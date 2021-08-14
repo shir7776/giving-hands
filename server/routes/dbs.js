@@ -37,6 +37,7 @@ router.get("/users.json",function(req,res,next){
 });
 
 router.get("/blogs.json",function(req,res,next){
+  console.log("in server")
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("helpHend");

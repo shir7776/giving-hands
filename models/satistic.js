@@ -4,10 +4,10 @@ const mongo = require("mongoose");
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
-        id_addr: { type: String, required: true,unique: true, index: true },
-        name_addr: { type: String, required: true },
-        ln: { type: String, required: true },
-        lng: { type: Int, required: true }
+        date: { type: Date, required: true,unique: true, index: true },
+        distributed: { type: String, required: true },
+        not_distributed: { type: String, required: true },
+        area: { type: Int, required: true }
        
 
     }, { autoIndex: false });
@@ -21,12 +21,12 @@ module.exports = db => {
     //     return this.name;
     // };
 
-    schema.statics.CREATE = async function(addr) {
+    schema.statics.CREATE = async function(stat) {
         return this.create({
-            id_addr: addr[0],
-            name_addr: addr[1],
-            ln: addr[2],
-            lng:addr[3]
+            date: stat[0],
+            distributed: stat[1],
+            not_distributed: stat[2],
+            area:stat[3]
             
         });
     };
@@ -90,6 +90,6 @@ module.exports = db => {
     // the schema is useless so far
     // we need to create a model using it
     // db.model('User', schema, 'User'); // (model, schema, collection)
-    db.model('addresses-for-distribution', schema); // if model name === collection name
-    debug("addresses-for-distribution model created");
+    db.model('statistics', schema); // if model name === collection name
+    debug("statistics model created");
 };

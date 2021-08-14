@@ -13,13 +13,13 @@ const getBlog=()=>{
     return lst;
 }
 
-const updateBlog=(giver)=>{
+const updateBlog=(blog)=>{
 
 }
-const addBlog=(giver)=>{
+const addBlog=(blog)=>{
 
 }
-const deleteBlog=(giver)=>{
+const deleteBlog=(blog)=>{
 
 }
 

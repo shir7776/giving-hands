@@ -9,7 +9,19 @@ const getLocations=()=>{
     return lst;
 }
 
+const updateLocation=(location)=>{
 
-export const serverAPI={
-    getLocations
+}
+const addLocation=(location)=>{
+
+}
+const deleteLocation=(location)=>{
+
+}
+
+export const locationAPI={
+    getLocations,
+    updateLocation,
+    addLocation,
+    deleteLocation
 }

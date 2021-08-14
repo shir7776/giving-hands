@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import Table from "../../components/table/table_component";
-import {serverAPI} from "../../API/serverAPI";
+import {locationAPI} from "../../API/locationAPI";
 
 export const LocationManagement = () => {
     const getLocations = () => {
-        serverAPI.getLocations()
+        return locationAPI.getLocations()
 
     }
     const [locationList, setLocationList] = React.useState(getLocations())
@@ -52,14 +52,12 @@ export const LocationManagement = () => {
         return lst;
     }
 
-    const updateLocation = (lst) => {
-        console.log("hahahahh")
+    const updateLocation = (location) => {
+        locationAPI.updateLocation(location)
     }
     const addLocation = async (newRow) => {
         const location = await getCoordinates(newRow.address)
         if (location) {
-
-
             const newRow2 =
                 {
                     id: newRow.id,
@@ -71,12 +69,13 @@ export const LocationManagement = () => {
                     date: Date.now()
                 }
             setLocationList(prevArray => [...prevArray, newRow2])
+            locationAPI.addLocation(location)
         }
         else{
             alert("could not find this address :(")
         }
     }
-    const deleteLocation = (lst) => {
+    const deleteLocation = (location) => {
         console.log("hahahahh")
     }
     const handleClick = (marker, event) => {

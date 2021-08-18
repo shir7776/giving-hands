@@ -1,4 +1,4 @@
-const DD = require('../../models')("dailyDist");
+const DD = require('../models')("dailyDist");
 const express = require('express');
 var router = express.Router();
 const bcrypt=require('bcrypt');

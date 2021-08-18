@@ -1,4 +1,4 @@
-const DD = require('../../models')("satistic");
+const DD = require('../models')("satistic");
 const express = require('express');
 var router = express.Router();
 const bcrypt=require('bcrypt');

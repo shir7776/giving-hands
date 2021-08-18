@@ -11,8 +11,9 @@ router.post('/satisticByDay',async function(req, res,next) {
     try{
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
+            var d = new Date();
             var dbo = db.db("helpHend");
-            var myquery = { date: Date.now() };
+            var myquery = { date: new Date(d.setDate(new Date().getDate())) };
             dbo.collection("satistic").find({myquery}).toArray(function(err, result) {
               if (err) throw err;
               db.close();

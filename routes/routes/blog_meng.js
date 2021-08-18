@@ -1,4 +1,4 @@
-const Blog = require("../models")("blogs");
+const Blog = require("../../models")("blogs");
 const express = require('express');
 var router = express.Router();
 const bcrypt=require('bcrypt');

@@ -29,7 +29,8 @@ const clusterAlg=require("./routes/clusterAlg");
 app.use("",clusterAlg);
 
 app.get('/', function(req, res) {
-    res.sendFile("index.js");
+    //res.render("index.js");
+    res.sendFile(path.join(__dirname, '../src', 'index.js'))
     
   });
 

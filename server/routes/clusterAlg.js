@@ -40,12 +40,12 @@ router.get('/try',async function(req, res,next) {
    
   // Create the data 2D-array (vectors) describing the data
   let vectors = new Array();
-  for (let i = 0 ; i < data.length ; i++) {
+  for (let i = 0 ; i < lst.length ; i++) {
     vectors[i] = [ lst[i]['lat'] , lst[i]['lng']];
   }
    
   const kmeans = require('node-kmeans');
-  kmeans.clusterize(vectors, {k: 2}, (err,result) => {
+  kmeans.clusterize(vectors, {k: 3}, (err,result) => {
     if (err) console.error(err);
     else console.log('%o',result);
     res.json(result);
@@ -53,84 +53,63 @@ router.get('/try',async function(req, res,next) {
   
 });
 
-router.post('/bla', function(req, res, next) {
+router.get('/bla', function(req, res, next) {
     try{
-    var addresses=req.body.addresses;
-    var users=req.body.users;
+    var addresses=new Array();
+    //var users = req.body.users;
+    //var len=users.length;
     let vectors = new Array();
-    
+
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("helpHend");
+        dbo.collection("addresses-for-distribution").find({}).toArray(function(err, result) {
+          if (err) throw err; 
+        addresses.push(result);
+        console.log("bla"+addresses.length)
+        db.close();
+        });
+    });
+
     for (let i = 0 ; i < addresses.length ; i++) {
-       vectors[i] = [addresses[i].lat , addresses[i].lng];
-       
-   }
-   if(addresses.length>users.length){
- 
-    kmeans.clusterize(vectors,{k: users.length }, (err,result) => {
-       if (err){
-          console.log(err)  
-       }
-       else {
-       var DivByDatelist=[]         
-          for (let i = 0 ; i < users.length ; i++) {
-         
-          let a=[];
-          let vectorsBit=[];     
+        vectors[i] = [addresses[i].lat , addresses[i].lng];
+        
+    }
+    var DivByDatelist=[]  
+    console.log("bla"+addresses.length)
+    if(addresses.length>0){
+        console.log("1")
+        kmeans.clusterize(vectors,{k: 1 }, (err,result) => {
+            if (err){
+               console.log(err)
+              
+            }
+        console.log("2")    
+        for (let i = 0 ; i < 1 ; i++) {
+            let a=[];
+            let vectorsBit=[];     
             for(let j = 0 ; j < result[i].clusterInd.length ; j++)
-             {
-                a.push(addresses[result[i].clusterInd[j]]._id)
-                vectorsBit[j]=0;
-             }
-             let userByAdd=
+            {
+               a.push(addresses[result[i].clusterInd[j]]._id)
+               vectorsBit[j]=0;
+            }
+            console.log("3")
+            let userByAdd=
             {
             //"date":new Date("2021-08-11T21:00:00.000+00:00"),
-            "date":data.date,
-            "settId":data.settId,
-            "userId":users[i]._id,
+            "userId":"11111",
             "addressesBit":vectorsBit,
             "addresses":a
             }
-             DivByDatelist.push(userByAdd)
- 
-          }
-          let query={
-             "date":new Date("2021-08-11T21:00:00.000+00:00"),
-            }
- 
-          divByDate.deleteMany(query, function(err, result) {
-            {
-             
-                   divByDate.insertMany(DivByDatelist, function(err, result) {
-                      if (err)
-                      {
-                         console.log("p2")
-                         return               
-                      }
-                      else
-                      {
-                         res.send(true);
-                      }
- 
- 
-                   })
- 
-                }
- 
- 
- 
-          })
-        
-   
- 
+            DivByDatelist.push(userByAdd);
+            console.log("4")
+        }
+
+        });
     }
- })
- }
- else{
-    res.send(false)
- }
-    }
- 
- 
-    catch(e){
+    res.json(DivByDatelist)
+
+ } catch(e){
        console.log(e)
     }
  });

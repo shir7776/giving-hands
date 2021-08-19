@@ -29,6 +29,12 @@ router.get('/clusterAlg',async function(req, res,next) {
 
 
 });
+router.get('/', function(req, res,next) {
+    //res.render("index");
+    //res.sendFile(path.join(__dirname, '../src', 'index'));
+    res.send("hello world!");
+    //res.sendFile(path.resolve(__dirname, 'src', 'index.js'));
+  });
 
 router.get('/try',async function(req, res,next) {
     const lst = [
@@ -55,37 +61,24 @@ router.get('/try',async function(req, res,next) {
 
 router.get('/bla', function(req, res, next) {
     try{
-    var addresses=new Array();
-    //var users = req.body.users;
-    //var len=users.length;
+    var addresses=req.body.address;
+    var users = req.body.users;
     let vectors = new Array();
-
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("helpHend");
-        dbo.collection("addresses-for-distribution").find({}).toArray(function(err, result) {
-          if (err) throw err; 
-        addresses.push(result);
-        console.log("bla"+addresses.length)
-        db.close();
-        });
-    });
-
     for (let i = 0 ; i < addresses.length ; i++) {
         vectors[i] = [addresses[i].lat , addresses[i].lng];
         
     }
     var DivByDatelist=[]  
     console.log("bla"+addresses.length)
-    if(addresses.length>0){
+    if(addresses.length>users.length){
         console.log("1")
-        kmeans.clusterize(vectors,{k: 1 }, (err,result) => {
+        kmeans.clusterize(vectors,{k: users.length }, (err,result) => {
             if (err){
                console.log(err)
               
             }
         console.log("2")    
-        for (let i = 0 ; i < 1 ; i++) {
+        for (let i = 0 ; i < users.length ; i++) {
             let a=[];
             let vectorsBit=[];     
             for(let j = 0 ; j < result[i].clusterInd.length ; j++)

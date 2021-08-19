@@ -1,8 +1,8 @@
-const User = require('../../models')("users");
-const AFD = require('../../models')("addressForDistr");
-const Blogs = require('../../models')("blogs");
-const DD = require('../../models')("dailyDist");
-const DA = require('../../models')("divisionalAraes");
+const User = require('../../models/users');
+const AFD = require('../../models/addressForDistr');
+const Blogs = require('../../models/addressForDistr');
+const DD = require('../../models/dailyDist');
+const DA = require('../../models/divisionalAraes');
 const express = require('express');
 var router = express.Router();
 
@@ -44,6 +44,7 @@ router.get("/blogs.json",function(req,res,next){
     dbo.collection("blogs").find({}).toArray(function(err, result) {
       if (err) throw err;
       db.close();
+      console.log(result)
       res.json(result);
     });
   });

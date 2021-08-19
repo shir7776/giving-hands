@@ -1,7 +1,14 @@
-import express from 'express'
+// import express from 'express'
+const express = require('express');
+
+
 const app = express()
-
-
+const path = require('path');
+//const app = express();
+app.use(express.json("li"));
+//app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(__dirname, '../../src')));
 
 const login=require("./routes/login");
 app.use("",login);
@@ -17,3 +24,4 @@ app.use("",dbs);
 
 const user_meng=require("./routes/user_meng");
 app.use("",user_meng);
+app.listen(8080)

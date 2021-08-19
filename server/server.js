@@ -1,14 +1,21 @@
 // import express from 'express'
 const express = require('express');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const app = express();
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+ extended: true})); 
+app.use(cors())
 
 
-const app = express()
+
 const path = require('path');
-//const app = express();
-app.use(express.json("li"));
-//app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../src')));
+
+
 
 const login=require("./routes/login");
 app.use("",login);
@@ -25,10 +32,10 @@ app.use("",dbs);
 const user_meng=require("./routes/user_meng");
 app.use("",user_meng);
 
-app.get('/', function(req, res) {
-    res.sendFile("index.js");
-    
-  });
+const clusterAlg=require("./routes/clusterAlg");
+app.use("",clusterAlg);
 
 
-app.listen(5000)
+
+
+app.listen(5000) 

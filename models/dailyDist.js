@@ -4,12 +4,11 @@ const mongo = require("mongoose");
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
-        id_daily:{type:String,required: true,unique: true, index: true},
-        date: { type: Date, required: true },
-        email: { type: String, required: true },
-        id_addr: { type: String, required: true },//from the address table
-        done:{type:String,required:true}
-       
+        name_addr: { type: String, required: true },
+        ln: { type: String, required: true },
+        lng: { type: BigInt64Array, required: true },
+        name_user:{ type: String, required: true},
+        area:{type: BigInt64Array, required: true}
 
     }, { autoIndex: false });
 
@@ -24,11 +23,11 @@ module.exports = db => {
 
     schema.statics.CREATE = async function(dd) {
         return this.create({
-            id_daily: dd[0],
-            date: dd[1],
-            email: dd[2],
-            id_addr:dd[3],
-            done:dd[4]
+            name_addr: dd[0],
+            ln: dd[1],
+            lng:dd[2],
+            name_user:dd[3],
+            area:dd[4]
             
         });
     };

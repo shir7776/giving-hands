@@ -4,7 +4,6 @@ const mongo = require("mongoose");
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
-        id_blog: { type: String, required: true,unique: true, index: true },
         title: { type: String, required: true },
         content: { type: String, required: true },
         email: { type: String, required: true }
@@ -23,10 +22,9 @@ module.exports = db => {
 
     schema.statics.CREATE = async function(blog) {
         return this.create({
-            id_blog: blog[0],
-            title: blog[1],
-            content: blog[2],
-            email:blog[3]
+            title: blog[0],
+            content: blog[1],
+            email:blog[2]
             
         });
     };

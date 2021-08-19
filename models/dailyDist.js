@@ -4,7 +4,6 @@ const mongo = require("mongoose");
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
-        id_addr: { type: String, required: true,unique: true, index: true },
         name_addr: { type: String, required: true },
         ln: { type: String, required: true },
         lng: { type: BigInt64Array, required: true },
@@ -24,12 +23,11 @@ module.exports = db => {
 
     schema.statics.CREATE = async function(dd) {
         return this.create({
-            id_addr: dd[0],
-            name_addr: dd[1],
-            ln: dd[2],
-            lng:dd[3],
-            name_user:dd[4],
-            area:dd[5]
+            name_addr: dd[0],
+            ln: dd[1],
+            lng:dd[2],
+            name_user:dd[3],
+            area:dd[4]
             
         });
     };

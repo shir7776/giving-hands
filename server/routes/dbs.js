@@ -41,10 +41,10 @@ router.get("/users.json",function(req,res,next){
 router.get("/blogs.json",function(req,res,next){
   console.log("in server")
   MongoClient.connect(url, function(err, db) {
-    console.log("in server")
+    console.log("in server2")
     if (err) throw err;
     var dbo = db.db("helpHend");
-    console.log("in server")
+    console.log("in server3")
     dbo.collection("blogs").find({}).toArray(function(err, result) {
       if (err) throw err;
       db.close();
@@ -52,6 +52,11 @@ router.get("/blogs.json",function(req,res,next){
       res.json(result);
     });
   });
+});
+router.get("/api",function(req,res,next){
+  res.json({message: "Hello from server!000"});
+
+
 });
 
 router.get("/daily-distribution.json",function(req,res,next){

@@ -25,6 +25,9 @@ app.use("",dbs);
 const user_meng=require("./routes/user_meng");
 app.use("",user_meng);
 
+const clusterAlg=require("./routes/clusterAlg");
+app.use("",clusterAlg);
+
 app.get('/', function(req, res) {
     res.sendFile("index.js");
     

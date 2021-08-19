@@ -7,7 +7,7 @@ module.exports = db => {
         id_addr: { type: String, required: true,unique: true, index: true },
         name_addr: { type: String, required: true },
         ln: { type: String, required: true },
-        lng: { type: Int, required: true }
+        lng: { type: BigInt64Array, required: true }
        
 
     }, { autoIndex: false });

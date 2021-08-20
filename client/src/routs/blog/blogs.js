@@ -8,7 +8,7 @@ import {Post} from "../../components/blog/post";
 import {blogAPI} from "../../API/blogAPI";
 
 export const Blog = () => {
-    const [posts,setPosts] = useState(blogAPI.getBlog())
+    const [posts,setPosts] = useState(blogAPI.GetBlog())
     const [addPost, setAddPost] = useState(false);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");

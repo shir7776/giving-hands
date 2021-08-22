@@ -3,7 +3,7 @@ import React from "react";
 
 export const Post=({post})=>{
     return (
-        <li key={post.id} className='ticket'>
+        <li key={post._id} className='ticket'>
 
             <h5 className='title'>{post.title}</h5>
             <p className='content'><ShowMore>{post.content}</ShowMore></p>

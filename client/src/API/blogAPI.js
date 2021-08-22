@@ -1,4 +1,8 @@
-const getBlog=()=>{
+import { useState } from "react";
+
+export const BlogAPI= ()=>{
+    const [data,setData]= useState(null);
+const getBlog= ()=>{
 
    const lst=
        [
@@ -31,7 +35,13 @@ const getBlog=()=>{
                "creationTime": 1529188631674
            }
        ]
-    return lst;
+        fetch("/blogs.json")
+        .then((res) => res.json())
+        .then((data1) =>setData(JSON.stringify(data1))
+        
+        );
+   
+    return data;
 }
 
 const updateBlog=(blog)=>{
@@ -43,10 +53,9 @@ const addBlog=(blog)=>{
 const deleteBlog=(blog)=>{
 
 }
-
-export const blogAPI={
+return {
     getBlog,
     updateBlog,
     addBlog,
     deleteBlog
-}
+}}

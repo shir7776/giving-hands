@@ -11,58 +11,11 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
 
 
 
-router.get('/clusterAlg',async function(req, res,next) {
-    var lstAddress=new Array();
-    var lstlusters=req.body.clusters;
-    var num = lstlusters.length;
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("helpHend");
-        dbo.collection("addresses-for-distribution").find({myquery}).toArray(function(err, result) {
-          if (err) throw err;
-          lstAddress.push(result);
-        db.close();
-        });
-    });
-
-
-
-
-});
-router.get('/', function(req, res,next) {
-    //res.render("index");
-    //res.sendFile(path.join(__dirname, '../src', 'index'));
-    res.send("hello world!");
-    //res.sendFile(path.resolve(__dirname, 'src', 'index.js'));
-  });
-
-router.get('/try',async function(req, res,next) {
-    const lst = [
-        {address: "1", lat: 31, lng: 35, id: 1,  finished: false},
-        {address: "2", lat: 32, lng: 35, id: 2,  finished: false},
-        {address: "3", lat: 31, lng: 34, id: 3,  finished: false},
-        {address: "4", lat: 31.5, lng: 34.5, id: 4, finished: false}
-    ];
-   
-  // Create the data 2D-array (vectors) describing the data
-  let vectors = new Array();
-  for (let i = 0 ; i < lst.length ; i++) {
-    vectors[i] = [ lst[i]['lat'] , lst[i]['lng']];
-  }
-   
-  const kmeans = require('node-kmeans');
-  kmeans.clusterize(vectors, {k: 3}, (err,result) => {
-    if (err) console.error(err);
-    else console.log('%o',result);
-    res.json(result);
-  });
-  
-});
-
-router.get('/bla', function(req, res, next) {
+router.get('/clusterAlg', function(req, res, next) {
     try{
     var addresses=req.body.address;
     var users = req.body.users;
+    var date=req.body.date[0];
     let vectors = new Array();
     for (let i = 0 ; i < addresses.length ; i++) {
         vectors[i] = [addresses[i].lat , addresses[i].lng];
@@ -90,20 +43,39 @@ router.get('/bla', function(req, res, next) {
             let userByAdd=
             {
             //"date":new Date("2021-08-11T21:00:00.000+00:00"),
-            "userId":"11111",
+            "date":req.body.date,
+            "userId":users[_id],
             "addressesBit":vectorsBit,
             "addresses":a
             }
             DivByDatelist.push(userByAdd);
             console.log("4")
         }
-
-        });
-    }
-    res.json(DivByDatelist)
-
- } catch(e){
-       console.log(e)
+        let query={
+          "date":new Date("2021-08-11T21:00:00.000+00:00"),
+         }
+         divByDate.deleteMany(query, function(err, result) {
+          {
+                 divByDate.insertMany(DivByDatelist, function(err, result) {
+                  if (err)
+                  {
+                     console.log("p2")
+                     return               
+                  }
+                  else
+                  {
+                     res.send(true);
+                  }
+               });
+            }
+      });
+});
+}
+else{
+res.send(false)
+}
+}catch(e){
+       console.log(e);
     }
  });
 

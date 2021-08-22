@@ -1,5 +1,8 @@
-import React, {useState,useEffect} from "react";
-const GetBlog=()=>{
+import { useState } from "react";
+
+export const BlogAPI= ()=>{
+    const [data,setData]= useState(null);
+const getBlog= ()=>{
 
    const lst=
        [
@@ -32,17 +35,12 @@ const GetBlog=()=>{
                "creationTime": 1529188631674
            }
        ]
-    const [data, setData] = React.useState(null);
-
-     React.useEffect( () => {
-         async function bla(){
-          await fetch("/blogs.json")
-            .then((res) => res.json())
-            .then( (data) =>  setData(JSON.stringify(data)));
-         }
-         bla();
-    }, []);
-    console.log(data)
+        fetch("/blogs.json")
+        .then((res) => res.json())
+        .then((data1) =>setData(JSON.stringify(data1))
+        
+        );
+   
     return data;
 }
 
@@ -55,10 +53,9 @@ const addBlog=(blog)=>{
 const deleteBlog=(blog)=>{
 
 }
-
-export const blogAPI={
-    GetBlog,
+return {
+    getBlog,
     updateBlog,
     addBlog,
     deleteBlog
-}
+}}

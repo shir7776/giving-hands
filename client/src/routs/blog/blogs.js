@@ -5,10 +5,11 @@ import ShowMore from 'react-show-more';
 
 import {NewPost} from "../../components/blog/newPost";
 import {Post} from "../../components/blog/post";
-import {blogAPI} from "../../API/blogAPI";
+import {BlogAPI} from "../../API/blogAPI";
 
 export const Blog = () => {
-    const [posts,setPosts] = useState(blogAPI.GetBlog())
+    //
+    const [posts,setPosts] = useState(null);
     const [addPost, setAddPost] = useState(false);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -18,8 +19,13 @@ export const Blog = () => {
     const newPostVisibility = () => {
         setAddPost(!addPost);
     };
+    React.useEffect(() => {
+        setPosts(BlogAPI().getBlog());
+    }, []);
+    
 
     const renderPosts = () => {
+        console.log(posts)
         return (<div className={styles.blog}>
             <ul className='tickets'>
                 {posts.map((post, index) => (
@@ -28,13 +34,8 @@ export const Blog = () => {
             </ul>
         </div>);
     };
-    const allThePosts=()=>{
-        console.log("in all the post function")
-        fetch("/blogs.json")
-        .then(response => response.json())
+    
 
-
-};
     return (
         <main>
 

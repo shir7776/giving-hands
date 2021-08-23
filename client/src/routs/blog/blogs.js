@@ -14,26 +14,43 @@ export const Blog = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [hodaya ,setHodaya]=useState(false);
 
     const [labels, setLabels] = useState(null);
     const newPostVisibility = () => {
         setAddPost(!addPost);
     };
-    React.useEffect(() => {
-        setPosts(BlogAPI().getBlog());
+    React.useEffect(async() => {
+         await fetch("/blogs.json")
+        .then((res) => res.json())
+        .then((data1) =>setPosts((JSON.stringify(data1)))
+        
+        );
+        //var a =await BlogAPI().getBlog().then(data=>{JSON.stringify(data)});
+        //console.log(a);
+        //setPosts(BlogAPI().getBlog());
+        console.log(typeof(posts))
     }, []);
     
+    React.useEffect(() => {
+        setHodaya(true);
+    }, [posts]);
 
     const renderPosts = () => {
-        console.log(posts)
+        
         return (<div className={styles.blog}>
             <ul className='tickets'>
+                
                 {posts.map((post, index) => (
                     <Post post={post}/>
                 ))}
             </ul>
         </div>);
+
+        
+        
     };
+
     
 
     return (
@@ -49,7 +66,7 @@ export const Blog = () => {
                                      setContent={setContent}/>}
             </header>
             <div>
-                { posts ? renderPosts() : <h2>Loading..</h2>}
+                { hodaya ? renderPosts() : <h2>Loading..</h2>}
 
             </div>
             </body>

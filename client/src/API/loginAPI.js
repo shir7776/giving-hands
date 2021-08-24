@@ -1,5 +1,5 @@
 const login=(email,password)=>{
-    return true
+    return {type:"giver"}
 }
 export const loginAPI={
     login

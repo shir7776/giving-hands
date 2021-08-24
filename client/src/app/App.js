@@ -38,6 +38,7 @@ export const App = () => {
 
 
     console.log("Host URL" + process.env.PUBLIC_URL);
+    const type = person.type === "manager"
     return (
 
         !person ?
@@ -47,26 +48,31 @@ export const App = () => {
 
             <HashRouter>
                 <div>
-                    <h1>Simple SPA</h1>
 
                     <ul className="header">
                         <li><img className="Logo" src={logo} alt="Logo"/></li>
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>
-                        <li><NavLink to="/giversManagement">Givers Management</NavLink></li>
-                        <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink></li>
-                        <li><NavLink to="/locationManagement">Location Management</NavLink></li>
-                        <li><NavLink to="/statistics">Statistics</NavLink></li>
+
+                        {type &&
+                        <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/giversManagement">Givers Management</NavLink></li>}
+                        {!type &&
+                        <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/locationManagement">Location Management</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/statistics">Statistics</NavLink></li>}
                         <li><NavLink to="/blog">Blog</NavLink></li>
                     </ul>
                     <div className="content">
                         <Route exact path="/" component={Home}/>
-                        <Route path="/assignGivers" component={AssignGivers}/>
-                        <Route path="/giversManagement" component={GiversManagement}/>
-                        <Route path="/giveConfirmation" component={GiveConfirmation}/>
-                        <Route path="/locationManagement" component={LocationManagement}/>
-                        <Route path="/statistics" component={Statistics}/>
-                        <Route path="/blog" component={Blog}/>
+                         <Route path="/assignGivers" component={AssignGivers} isAuthed={type}/>
+                         <Route path="/giversManagement" component={GiversManagement} isAuthed={type}/>
+                         <Route path="/giveConfirmation" component={GiveConfirmation} isAuthed={type}/>
+                         <Route path="/locationManagement" component={LocationManagement} isAuthed={type}/>
+                        <Route path="/statistics" component={Statistics} isAuthed={type}/>
+                        <Route path="/blog" render={()=><Blog type={type}/> } />
                     </div>
                 </div>
             </HashRouter>

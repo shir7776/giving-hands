@@ -1,6 +1,6 @@
 import React from "react";
 
-export const NewPost = ({setTitle,setContent,setUserEmail,setLabels,newPostVisibility})=>{
+export const NewPost = ({setTitle,setContent,setUserEmail,setLabels,newPostVisibility,addNewPost})=>{
     return (
         <div >
             <div className="login-box">
@@ -26,12 +26,12 @@ export const NewPost = ({setTitle,setContent,setUserEmail,setLabels,newPostVisib
                         <label>Labels You Want To Add?</label>
                         <h5 style={{margin:-10}}>*required fields</h5>
                     </div>
-                    <a >
+                    <a onClick={addNewPost}>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
-                        Add Ticket
+                        Add Post
                     </a><a onClick={newPostVisibility}>cancle</a>
                 </form>
             </div>

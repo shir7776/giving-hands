@@ -1,4 +1,5 @@
 const debug = require("debug")("mongo:model-user");
+const { Int32 } = require("mongodb");
 const mongo = require("mongoose");
 
 module.exports = db => {
@@ -6,7 +7,8 @@ module.exports = db => {
     let schema = new mongo.Schema({
         title: { type: String, required: true },
         content: { type: String, required: true },
-        email: { type: String, required: true }
+        email: { type: String, required: true },
+        creationTime:{type: Int32, required: true}
        
 
     }, { autoIndex: false });
@@ -24,7 +26,8 @@ module.exports = db => {
         return this.create({
             title: blog[0],
             content: blog[1],
-            email:blog[2]
+            email:blog[2],
+            creationTime:blog[3]
             
         });
     };

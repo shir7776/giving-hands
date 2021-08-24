@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export const BlogAPI= ()=>{
+
     //const [data,setData]= useState(null);
-const getBlog= async()=>{
+const getBlog= ()=>{
     var data =[];
 
    const lst=
@@ -36,34 +36,25 @@ const getBlog= async()=>{
                "creationTime": 1529188631674
            }
        ]
-//        await fetch("/blogs.json")
-//         .then((res) => res.json())
-//         .then((data1) =>data = JSON.stringify(data1)
-        
-//         );
-// //    return data;
-// //var data=fetch("/blogs.json");
-//         var p = Promise.resolve(data);
-//         p.then(function(v) {
-//         console.log(v[0]); // 1
-//         });
-//         var arrayOfValues = await Promise.all(data)
-//         console.log(arrayOfValues);
-    return fetch("/blogs.json").then((res) => res.json());
 }
 
-const updateBlog=(blog)=>{
+const addBlog=async(blog)=>{
+    const date =new Date();
+       var creationTime =date.valueOf();
+        console.log(creationTime);
+        //const ans={blog,creationTime};
+            const options = {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(blog)
+            };
+            console.log("befor fetch")
+            await fetch("/addNewBlog",options);
 
 }
-const addBlog=(blog)=>{
-
-}
-const deleteBlog=(blog)=>{
-
-}
-return {
+export const BlogAPI= {
     getBlog,
-    updateBlog,
-    addBlog,
-    deleteBlog
-}}
+    addBlog
+}

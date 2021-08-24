@@ -14,30 +14,47 @@ export const Blog = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const [hodaya ,setHodaya]=useState(false);
+    const [flag ,setFlag]=useState(false);
+    const [flagAdd ,setFlagAdd]=useState(false);
 
     const [labels, setLabels] = useState(null);
     const newPostVisibility = () => {
         setAddPost(!addPost);
     };
+    const addNewPost =()=>{
+        const date =new Date();
+       var creationTime =date.valueOf();
+        BlogAPI.addBlog({title,content,userEmail,creationTime});
+        setAddPost(!addPost);
+    }
     React.useEffect(async() => {
          await fetch("/blogs.json")
         .then((res) => res.json())
-        .then((data1) =>setPosts((JSON.stringify(data1)))
+        .then((data1) =>{setPosts(data1);
+                        setFlag(true);}
         
         );
-        //var a =await BlogAPI().getBlog().then(data=>{JSON.stringify(data)});
-        //console.log(a);
-        //setPosts(BlogAPI().getBlog());
-        console.log(typeof(posts))
     }, []);
+
+//     React.useEffect(async() => {
+//         const date =new Date();
+//        var creationTime =date.valueOf();
+//         console.log(creationTime);
+//         const ans={title,content,userEmail,creationTime};
+//             const options = {
+//                 method: 'POST',
+//                 headers: {
+//                 'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(ans)
+//             };
+//             console.log("befor fetch")
+//             await fetch("/addNewBlog",options);
+//    }, []);
     
-    React.useEffect(() => {
-        setHodaya(true);
-    }, [posts]);
+    
 
     const renderPosts = () => {
-        
         return (<div className={styles.blog}>
             <ul className='tickets'>
                 
@@ -63,10 +80,11 @@ export const Blog = () => {
                                      setUserEmail={setUserEmail}
                                      setTitle={setTitle}
                                      setLabels={setLabels}
-                                     setContent={setContent}/>}
+                                     setContent={setContent}
+                                     addNewPost={addNewPost}/>}
             </header>
             <div>
-                { hodaya ? renderPosts() : <h2>Loading..</h2>}
+                { flag ? renderPosts() : <h2>Loading..</h2>}
 
             </div>
             </body>

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import createApiClient from '../api'
-import { BrowserRouter as Router, Switch,  Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import LoginModal from "react-login-modal";
 import logo from "../logo.jpg"
 import {
@@ -26,30 +26,23 @@ import {Blog} from "../routs/blog/blogs";
 import {Login} from "../components/login/login";
 
 const api = createApiClient
-class App extends Component {
-    constructor(props){
-        super(props)
-        this.state={
-            login:this.login,
-            currpage:<div>hello</div>
-        }
-    }
-    handleSignup = (username, email, password) => {};
-    handleLogin = (username, password) => {}
-    on=()=>{
-        this.setState(
-            {currpage:Home}
-        )
-    }
-    render() {
-        console.log("Host URL"+process.env.PUBLIC_URL);
-        return (
-            // <LoginModal
-            //       handleSignup={this.handleSignup}
-            //       handleLogin={this.handleLogin}
-            //     />
+export const App = () => {
+
+    const [login, setLogin] = useState("this.login")
+    const [cuurpage, setCurrpage] = useState(<div>hello</div>)
+    const [person, setPerson] = useState(false)
+    useEffect(() => {
+            setCurrpage(Home)
+        }, []
+    )
 
 
+    console.log("Host URL" + process.env.PUBLIC_URL);
+    return (
+
+        !person ?
+            <Login setPerson={setPerson}/>
+            :
 
 
             <HashRouter>
@@ -77,8 +70,8 @@ class App extends Component {
                     </div>
                 </div>
             </HashRouter>
-        );
-    }
+    );
+
 }
 
-export default App;
+

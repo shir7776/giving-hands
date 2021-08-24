@@ -64,6 +64,7 @@ export const App = () => {
                         {type &&
                         <li><NavLink to="/statistics">Statistics</NavLink></li>}
                         <li><NavLink to="/blog">Blog</NavLink></li>
+                        <li><NavLink to="/" onClick={()=>setPerson(false)}>logout</NavLink></li>
                     </ul>
                     <div className="content">
                         <Route exact path="/" component={Home}/>

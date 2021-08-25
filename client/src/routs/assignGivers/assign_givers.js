@@ -3,10 +3,11 @@ import Table from "../../components/table/table_component";
 import React, {useState} from "react";
 import {locationAPI} from "../../API/locationAPI";
 import {giversAPI} from "../../API/giversAPI";
+import style from './assingGiversStyle.module.css'
 
 export const AssignGivers = (props) => {
 
-    const [givers, setGivers] = useState(giversAPI.getGivers())
+    const [givers, setGivers] = useState(giversAPI.getDaylyGivers())
     const getAreaList = () => {
         const lst = [1, 2, 3, 4, 5]
         return lst.filter(area => !givers
@@ -14,8 +15,8 @@ export const AssignGivers = (props) => {
     }
     const [areaList, setAreaList] = useState(getAreaList())
     const [locations, setLocations] = useState(locationAPI.getLocations())
-
     const [selectedMarker, setSelectedMarker] = useState(false)
+
     const nonUsedAreas = () => {
         return (
 
@@ -29,16 +30,25 @@ export const AssignGivers = (props) => {
 
         )
     }
+    const isEveryGiverHasDifferentArea=()=>{
+
+        if(givers.filter(g=>givers.filter(g2=>g.area===g2.area).length>1).length===0){
+            return true
+        }
+        return false
+    }
+    const [isGiversHasDifferentArea, setIsGiversHasDifferentArea] = useState(isEveryGiverHasDifferentArea())
 
     const updateGiver = (giver) => {
         const newGiversList = givers
-        const index = newGiversList.findIndex(giver2 => giver2.id === giver.id)
+        const index = newGiversList.findIndex(giver2 => giver2._id === giver._id)
         newGiversList[index] = giver;
         setGivers(newGiversList)
         setAreaList(areaList.filter(area => !givers
             .some(giver => Number(giver.area) === area)))
         nonUsedAreas()
-        giversAPI.updateGiver(giver)
+        giversAPI.updateGiverWithArea(giver)
+        setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
     }
 
 
@@ -46,13 +56,13 @@ export const AssignGivers = (props) => {
     const getGiversColumns = () => {
         let lst = [
             {
-                title: 'ID', field: 'id', editable: false
+                title: 'ID', field: '_id', editable: false
             },
             {
                 title: 'Name', field: 'name', editable: false
             },
             {
-                title: 'Phone Number', field: 'phone', editable: false
+                title: 'Phone Number', field: 'phone_number', editable: false
             },
             {
                 title: 'Email', field: 'email', editable: false
@@ -80,10 +90,9 @@ export const AssignGivers = (props) => {
                 markers={locations}
                 onClick={handleClick}
             />
-
-            <h3>Areas Left To Assighn:</h3>
+            <h3>Areas Left To Assign:</h3>
             {nonUsedAreas()}
-
+            {isGiversHasDifferentArea&&<h4 className={style.redHeadline}>You Cannot Assign Two Givers To The Same Area</h4>}
             <Table
                 name={"Assign Givers"}
                 data={givers}

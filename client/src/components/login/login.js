@@ -24,7 +24,7 @@ export const Login = ({setPerson})=>{
                     </div>
                     <div className="user-box">
 
-                        <input type="text" name="" required={true} onChange={(e)=>(setPassword(e.target.value))}/>
+                        <input type="password" name="" required={true} onChange={(e)=>(setPassword(e.target.value))}/>
                         <label>Password</label>
                     </div>
 

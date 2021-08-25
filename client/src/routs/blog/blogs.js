@@ -24,13 +24,15 @@ export const Blog = ({type}) => {
     const addNewPost =()=>{
         const date =new Date();
        var creationTime =date.valueOf();
-        BlogAPI.addBlog({title,content,userEmail,creationTime});
+       const post={title,content,userEmail,creationTime}
+        BlogAPI.addBlog(post);
         setAddPost(!addPost);
+        setPosts([post,...posts])
     }
     React.useEffect(async() => {
          await fetch("/blogs.json")
         .then((res) => res.json())
-        .then((data1) =>{setPosts(data1);
+        .then((data1) =>{setPosts(data1.reverse());
                         setFlag(true);}
         
         );

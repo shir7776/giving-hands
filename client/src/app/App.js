@@ -30,7 +30,7 @@ export const App = () => {
 
     const [login, setLogin] = useState("this.login")
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
-    const [person, setPerson] = useState(false)
+    const [person, setPerson] = useState({type:"manager"})
     useEffect(() => {
             setCurrpage(Home)
         }, []

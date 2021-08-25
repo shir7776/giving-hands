@@ -7,7 +7,7 @@ import {NewPost} from "../../components/blog/newPost";
 import {Post} from "../../components/blog/post";
 import {BlogAPI} from "../../API/blogAPI";
 
-export const Blog = () => {
+export const Blog = ({type}) => {
     //
     const [posts,setPosts] = useState(null);
     const [addPost, setAddPost] = useState(false);
@@ -74,15 +74,15 @@ export const Blog = () => {
         <main>
 
             <body className='body2'>
-            <header>
-                <button onClick={newPostVisibility}>{"Add New Post"}</button>
+            {type&&<header>
+                 <button onClick={newPostVisibility}>{"Add New Post"}</button>
                 {addPost && <NewPost newPostVisibility={newPostVisibility}
-                                     setUserEmail={setUserEmail}
-                                     setTitle={setTitle}
-                                     setLabels={setLabels}
-                                     setContent={setContent}
-                                     addNewPost={addNewPost}/>}
-            </header>
+                    setUserEmail={setUserEmail}
+                    setTitle={setTitle}
+                    setLabels={setLabels}
+                    setContent={setContent}
+                    addNewPost={addNewPost}/>}
+            </header>}
             <div>
                 { flag ? renderPosts() : <h2>Loading..</h2>}
 

@@ -31,7 +31,6 @@ router.post('/addNewBlog',async function(req, res,next) {
           data:'true',
           message:"success"
         }); }, 1000); 
-        
     
    }
    catch{

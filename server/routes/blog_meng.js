@@ -17,24 +17,16 @@ router.post('/addNewBlog',async function(req, res,next) {
         blog[2] = req.body.userEmail;
         blog[3]=req.body.creationTime;
         console.log(blog);
-        await MongoClient.connect(url, function(err, db) {
+        await MongoClient.connect(url, async function(err, db) {
           if (err) throw err;
           console.log("1");
           var dbo = db.db("helpHend");
           var myInsert ={title:req.body.title, content:req.body.content,userEmail:req.body.userEmail,creationTime:req.body.creationTime }
-          //dbo.collection("blogs").insert(myInsert);
           console.log("2");
-          //dbo.blogs.insert( myInsert ).toArray(function(err, result) {
-            dbo.collection("blogs").insertOne(myInsert);
-            db.close();
+          var x = await dbo.collection("blogs").insertOne(myInsert);
+          await db.close();
         });
-        console.log(blog);
-        
-        setTimeout(() => { res.json({
-          status: 'success',
-          data:'true',
-          message:"success"
-        }); }, 1000); 
+        console.log("3");
     
    }
    catch{

@@ -42,7 +42,6 @@ const getBlog= ()=>{
 const addBlog=async(blog)=>{
     const date =new Date();
        var creationTime =date.valueOf();
-        console.log(creationTime);
         //const ans={blog,creationTime};
             const options = {
                 method: 'POST',
@@ -51,7 +50,6 @@ const addBlog=async(blog)=>{
                 },
                 body: JSON.stringify(blog)
             };
-            console.log("befor fetch")
             await fetch("/addNewBlog",options);
 
 }

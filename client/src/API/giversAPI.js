@@ -10,6 +10,12 @@ const getGivers=()=>{
         {id:7, name:"rgte",phone:23, email:"sdfgsdfg", area:1}
 
     ]
+    //  fetch("/blogs.json")
+    //     .then((res) => res.json())
+    //     .then((data1) =>{setPosts(data1);
+    //                     setFlag(true);}
+        
+    //     );
     return lst;
 }
 

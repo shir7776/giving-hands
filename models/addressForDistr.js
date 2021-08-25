@@ -5,7 +5,7 @@ module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
         name_addr: { type: String, required: true },
-        ln: { type: String, required: true },
+        lat: { type: String, required: true },
         lng: { type: BigInt64Array, required: true }
        
 
@@ -23,7 +23,7 @@ module.exports = db => {
     schema.statics.CREATE = async function(addr) {
         return this.create({
             name_addr: addr[0],
-            ln: addr[1],
+            lat: addr[1],
             lng:addr[2]
             
         });

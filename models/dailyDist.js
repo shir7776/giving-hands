@@ -1,14 +1,16 @@
 const debug = require("debug")("mongo:model-user");
+const { Int32 } = require("mongodb");
 const mongo = require("mongoose");
 
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
         name_addr: { type: String, required: true },
-        ln: { type: String, required: true },
-        lng: { type: BigInt64Array, required: true },
-        name_user:{ type: String, required: true},
-        area:{type: BigInt64Array, required: true}
+        lat: { type: Int32, required: true },
+        lng: { type: Int32, required: true },
+        id_user:{ type: String, required: true},
+        area:{type: String, required: true},
+        finished:{type: Boolean , required: true}
 
     }, { autoIndex: false });
 
@@ -24,10 +26,11 @@ module.exports = db => {
     schema.statics.CREATE = async function(dd) {
         return this.create({
             name_addr: dd[0],
-            ln: dd[1],
+            lat: dd[1],
             lng:dd[2],
             name_user:dd[3],
-            area:dd[4]
+            area:dd[4],
+            finished:dd[5]
             
         });
     };

@@ -67,6 +67,8 @@ export class Table extends Component {
                                options={{
                                    actionsColumnIndex: -1, addRowPosition: "first",filtering:true
                                }}
+                               style={{"backgroundColor":"#f7fafb"}}
+
                 />
             </div>
         );

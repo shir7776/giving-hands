@@ -17,7 +17,7 @@ router.post('/addNewBlog',async function(req, res,next) {
         blog[2] = req.body.userEmail;
         blog[3]=req.body.creationTime;
         console.log(blog);
-        MongoClient.connect(url, function(err, db) {
+        await MongoClient.connect(url, function(err, db) {
           if (err) throw err;
           console.log("1");
           var dbo = db.db("helpHend");

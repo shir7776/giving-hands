@@ -4,8 +4,8 @@ import {loginAPI} from "../../API/loginAPI";
 export const Login = ({setPerson})=>{
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
-    const login =(email,password)=>{
-        const person=loginAPI.login(email,password)
+    const login =async(email,password)=>{
+        const person= await loginAPI.login(email,password)
         if(person){
             setPerson(person)
         }

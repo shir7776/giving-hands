@@ -48,6 +48,31 @@ export const App = () => {
 
             <HashRouter>
                 <div>
+                    <ul className="header2">
+                        <li><img className="Logo" src={logo} alt="Logo"/>
+                            <ul>
+                                <li><NavLink to="/">Home</NavLink></li>
+
+                                {type &&
+                                <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
+                                {type &&
+                                <li><NavLink to="/giversManagement">Givers Management</NavLink>
+                                </li>}
+                                {!type &&
+                                <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink>
+                                </li>}
+                                {type &&
+                                <li><NavLink to="/locationManagement">Location
+                                    Management</NavLink></li>}
+                                {type &&
+                                <li><NavLink to="/statistics">Statistics</NavLink></li>}
+                                <li><NavLink to="/blog">Blog</NavLink></li>
+                                <li className="logout"><NavLink to="/"
+                                                                onClick={() => setPerson(false)}>logout</NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
                     <ul className="header">
                         <li><img className="Logo" src={logo} alt="Logo"/></li>
@@ -64,16 +89,25 @@ export const App = () => {
                         {type &&
                         <li><NavLink to="/statistics">Statistics</NavLink></li>}
                         <li><NavLink to="/blog">Blog</NavLink></li>
-                        <li><NavLink to="/" onClick={()=>setPerson(false)}>logout</NavLink></li>
+                        <li className="logout"><NavLink to="/"
+                                                        onClick={() => setPerson(false)}>logout</NavLink>
+                        </li>
                     </ul>
+
+
+
+
                     <div className="content">
                         <Route exact path="/" component={Home}/>
-                         <Route path="/assignGivers" component={AssignGivers} isAuthed={type}/>
-                         <Route path="/giversManagement" component={GiversManagement} isAuthed={type}/>
-                         <Route path="/giveConfirmation" component={GiveConfirmation} isAuthed={type}/>
-                         <Route path="/locationManagement" component={LocationManagement} isAuthed={type}/>
+                        <Route path="/assignGivers" component={AssignGivers} isAuthed={type}/>
+                        <Route path="/giversManagement" component={GiversManagement}
+                               isAuthed={type}/>
+                        <Route path="/giveConfirmation" component={GiveConfirmation}
+                               isAuthed={type}/>
+                        <Route path="/locationManagement" component={LocationManagement}
+                               isAuthed={type}/>
                         <Route path="/statistics" component={Statistics} isAuthed={type}/>
-                        <Route path="/blog" render={()=><Blog type={type}/> } />
+                        <Route path="/blog" render={() => <Blog type={type}/>}/>
                     </div>
                 </div>
             </HashRouter>

@@ -66,6 +66,17 @@ const updateGiver=async(giver)=>{
     await fetch("/updetUser",options);
 
 }
+const deleteGiver=async(giver)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(giver)
+    };
+    await fetch("/deleteUser",options);
+
+}
 const addGiver= async (giver)=>{
     const options = {
         method: 'POST',
@@ -77,21 +88,10 @@ const addGiver= async (giver)=>{
     var mes="";
     await fetch("/addNewUser",options).then((response)=>response.json()) .then(response=>{
         if (response.data == "false"){
-            mes = response.message;          
+            mes = response.message;
         }
     });
     return mes? mes:"work!"
-
-}
-const deleteGiver=async(giver)=>{
-    const options = {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(giver)
-    };
-    await fetch("/deleteUser",options);
 
 }
 

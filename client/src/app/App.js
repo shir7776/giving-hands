@@ -24,6 +24,7 @@ import Statistics from "../routs/statistics/statistics";
 //import Blog from "../routs/blog/blog";
 import {Blog} from "../routs/blog/blogs";
 import {Login} from "../components/login/login";
+import {giversAPI} from "../API/giversAPI";
 
 const api = createApiClient
 export const App = () => {
@@ -40,7 +41,7 @@ export const App = () => {
         }
     }
 
-    const [login, setLogin] = useState("this.login")
+    const [givers, setGivers] = useState(giversAPI.getGivers)
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
     const [person, setPerson] = useState(keepLoging)
     useEffect(() => {

@@ -1,4 +1,4 @@
-const getGivers=()=>{
+const getGivers=async ()=>{
     var lst2 = new Array();
     const lst=[
         {id:1, name:"rgte",phone:23, email:"sdfgsdfg", area:1},
@@ -10,11 +10,11 @@ const getGivers=()=>{
         {id:7, name:"rgte",phone:23, email:"sdfgsdfg", area:1}
 
     ]
-    // await fetch("/users.json").then((response)=>response.json()) .then(response=>{
-    //    lst2.push(response);
-    // });
-    //return lst2;
-    return lst;
+    await fetch("/users.json").then((response)=>response.json()) .then(response=>{
+       lst2.push(response);
+    });
+    return lst2;
+    // return lst;
 }
 const getDaylyGivers= async ()=>{
     var lst2 = new Array();

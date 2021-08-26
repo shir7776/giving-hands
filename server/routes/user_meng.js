@@ -135,6 +135,7 @@ else{
 
 router.post('/deleteUser',async function(req, res,next) {
   try{
+    console.log(req.body)
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("helpHend");

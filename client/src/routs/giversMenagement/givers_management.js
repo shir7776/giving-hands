@@ -28,16 +28,21 @@ export const GiversManagement=()=>{
         ];
         return lst;
     }
-    const updateGiver=(lst)=>
+    const updateGiver=async (lst)=>
     {
+        await  giversAPI.updateGiver({fname:"rgte",lname:"jjk",phone_number:"1111123",password:"123", email:"sdfgddsdfg",address:"vxf",age:"4",salary:"ghcg",type:"dfgsd",workToday:true})
         console.log("hahahahh")
     }
-    const addGiver=(lst)=>
+    const addGiver=async (lst)=>
     {
-        console.log("hahahahh")
+        // const mes = await  giversAPI.addGiver({fname:"rgte",lname:"jjk",phone_number:"23",password:"123", email:"sdfgddsdfg",address:"vxf",age:"4",salary:"ghcg",type:"dfgsd"})
+        // console.log(mes);
+        const ls = await giversAPI.getDaylyGivers();
+        console.log(ls);
     }
-    const deleteGiver=(lst)=>
+    const deleteGiver=async(lst)=>
     {
+        await  giversAPI.deleteGiver({email:"sdfgddsdfg"})
         console.log("hahahahh")
     }
 

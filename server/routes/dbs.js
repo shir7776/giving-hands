@@ -16,7 +16,7 @@ router.get("/users.json",function(req,res,next){
      MongoClient.connect(url, function(err, db) {
          if (err) throw err;
          var dbo = db.db("helpHend");
-         dbo.collection("users").find({ststus:"1"}).toArray(function(err, result) {
+         dbo.collection("users").find({status:"1"}).toArray(function(err, result) {
            if (err) throw err;
            db.close();
            console.log(result)
@@ -29,10 +29,10 @@ router.get("/users.json",function(req,res,next){
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("helpHend");
-        dbo.collection("users").find({ststus:"1",workToday:true}).toArray(function(err, result) {
+        dbo.collection("users").find({status:"1",workToday:true}).toArray(function(err, result) {
           if (err) throw err;
-          db.close();
           console.log(result)
+          db.close();
           res.json(result);
         });
       });

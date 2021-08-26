@@ -13,8 +13,12 @@ const login=async (email,password)=>{
     await fetch("/login",options).then((response)=>response.json()) .then(response=>{
         if (response.data == "true"){
             flag=true;
-            type= {type: response.type};          
-        }
+            type= {type: response.type}; 
+            var fname=response.fname;
+            var lname=response.lname;
+            const obj={'email':email,'type':response.type,'fname':fname,'lname':lname }
+            sessionStorage.setItem('user',JSON.stringify(obj));   
+        }      
     });
     if(flag==true)
     {

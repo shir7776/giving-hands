@@ -11,59 +11,69 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
 
  router.post('/addNewUser',async function(req, res,next) {
   try{
-    var user=[];
-    user[0]= req.body.fname;
-    user[1]= req.body.lname;
-    user[2] = req.body.address;
-    user[3] = req.body.age;
-    user[4] = req.body.salery;
-    user[5] =req.body.phone_number;
-    user[6] =req.body.email;
-    user[7] =req.body.password;
-    user[8] = req.body.type;
-    user[9] = "1";//status
-   (async()=>{ await MongoClient.connect(url, function(err, db) {
+    var flag=false;
+    var user={
+      type: req.body.type,
+      fname: req.body.fname,
+      lname: req.body.lname,
+      address: req.body.address,
+      salery:req.body.salary,
+      age:req.body.age,
+      phone_number: req.body.phone_number,
+      email: req.body.email,
+      password: req.body.password,
+      status : "1",
+      };
+     await MongoClient.connect(url, async function(err, db) {
       if (err) throw err;
       var dbo =  db.db("helpHend");
-      dbo.collection("users").find({email: user[6]},{ projection: { email: user[6]} }).toArray( function(err, result) {
+      dbo.collection("users").find({email:req.body.email}).toArray( async function(err, result) {
         if (err) throw err;
+        console.log(result);
         if(result.length!=0)
-    {
-      setTimeout(() => { res.json({
-        status: 'failed',
-        data:'false',
-        message:"This email is already exist"
-      }); }, 1000);
+        {
+          flag =true;
+          setTimeout(() => { res.json({
+            status: 'failed',
+            data:'false',
+            message:"This email is already exist"
+          }); }, 1000);
      
-    }
-    
-    else if (req.body.type == "manager"){
-      User.CREATE(user);
-        console.log('User created:' + user);
-        setTimeout(() => { res.json({
-          status: 'success',
-          data:'true',
-          message:"success"
-        }); }, 1000);       
-    }
-    else{
-      user[10]=false;//workToday
-      user[11]="0";//area
-         User.CREATE(user);
-        console.log('User created:' + user);
-        setTimeout(() => { res.json({
-          status: 'success',
-          data:'true',
-          message:"success"
-        }); }, 1000);       
-    } 
-        db.close();
-      });
-
-    });
-  })();
-    
-    
+        }
+        else if (req.body.type == "manager"&&flag==false){
+          console.log(flag)
+                  var x = await dbo.collection("users").insertOne(user);
+                    setTimeout(() => { res.json({
+                      status: 'success',
+                      data:'true',
+                      message:"success"
+                    }); }, 1000);       
+                }
+                 else if (flag==false){
+                   console.log(flag)
+                          user={
+                            type: req.body.type,
+                            fname: req.body.fname,
+                            lname: req.body.lname,
+                            address: req.body.address,
+                            salery:req.body.salery,
+                            age:req.body.age,
+                            phone_number: req.body.phone_number,
+                            email: req.body.email,
+                            password: req.body.password,
+                            status : "1",
+                            workToday:false,
+                            area:"0"
+                            };
+                            var x = await dbo.collection("users").insertOne(user);
+                            setTimeout(() => { res.json({
+                              status: 'success',
+                              data:'true',
+                              message:"success"
+                            }); }, 1000);       
+                          } 
+       await db.close();
+      });});
     }catch{
       res.status(500).send();
     }
@@ -84,8 +94,7 @@ try{
   age:req.body.age,
   phone_number: req.body.phone_number,
   email: req.body.email,
-  password: req.body.password,
-  status : req.body.status,
+  password: req.body.password
   };
 }
 else{
@@ -99,7 +108,6 @@ else{
     phone_number: req.body.phone_number,
     email: req.body.email,
     password: req.body.password,
-    status : req.body.status,
     workToday: req.body.workToday
     };
 

@@ -27,16 +27,28 @@ import {Login} from "../components/login/login";
 
 const api = createApiClient
 export const App = () => {
+    const keepLoging = ()=>{
+        let data = JSON.parse(sessionStorage.getItem("user"));
+        if(data==null)
+            return false;
+        let type2 = data['type'];
+        if(type2!=null){
+            return {type: type2};
+        }
+        else{
+            return false;
+        }
+    }
 
     const [login, setLogin] = useState("this.login")
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
-    const [person, setPerson] = useState({type:"manager"})
+    const [person, setPerson] = useState(keepLoging)
     useEffect(() => {
             setCurrpage(Home)
         }, []
     )
 
-
+    
     console.log("Host URL" + process.env.PUBLIC_URL);
     const type = person.type === "manager"
     return (
@@ -68,7 +80,7 @@ export const App = () => {
                                 <li><NavLink to="/statistics">Statistics</NavLink></li>}
                                 <li><NavLink to="/blog">Blog</NavLink></li>
                                 <li className="logout"><NavLink to="/"
-                                                                onClick={() => setPerson(false)}>logout</NavLink>
+                                                                onClick={() => {sessionStorage.removeItem("user"); setPerson(false);}}>logout</NavLink>
                                 </li>
                             </ul>
                         </li>

@@ -69,7 +69,7 @@ export const GiversManagement = () => {
 
 
     return (
-        flag&&
+        flag?
         <Table
             name={"Givers Management"}
             data={givers}
@@ -77,7 +77,8 @@ export const GiversManagement = () => {
             update={updateGiver}
             delete={deleteGiver}
             add={addGiver}
-        />
+        />:
+            <h2>Loading...</h2>
     );
 
 

@@ -4,7 +4,7 @@ var router = express.Router();
 const bcrypt=require('bcrypt');
 
 var MongoClient = require('mongodb').MongoClient;
-//var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
+var mongoose = require('mongoose');//var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 //var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority" 
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
@@ -160,22 +160,30 @@ catch{
 
 router.post('/updateGiverWithArea',async function(req, res,next) {
   try{
-  MongoClient.connect(url, function(err, db) {
+  await MongoClient.connect(url, async function(err, db) {
     if (err) throw err;
     var dbo = db.db("helpHend");
-    var myquery = { _id: req.body._id, status: "1", workToday: true };
+    var myquery = { _id: mongoose.Types.ObjectId(req.body._id), status: "1", workToday: true };
     var newvalues = { $set: {area: req.body.area} };
-    dbo.collection("users").updateOne(myquery, newvalues, function(err, result) {
+    await dbo.collection("users").updateOne(myquery, newvalues, async function(err, result) {
       if (err) throw err;
-      console.log("1 document updated");
+      console.log(result)
+    console.log("1 document updated");  
+    await db.close();
     });
+  });
+
+    await MongoClient.connect(url, async function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("helpHend");
     var myquery = { area: req.body.area};
-    var newvalues = { $set: {id_user: req.body._id} };
-    dbo.collection("daily-distribution").updateMany(myquery, newvalues, function(err, result) {
+      var newvalues = { $set: {id_user: req.body._id} };
+    await dbo.collection("daily-distribution").updateMany(myquery, newvalues, function(err, result) {
       if (err) throw err;
+      console.log(result)
       console.log("documents updated");
+       db.close();
     });
-    db.close();
   });
   
 }

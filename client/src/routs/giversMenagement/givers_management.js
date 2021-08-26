@@ -35,10 +35,11 @@ export const GiversManagement=()=>{
     }
     const addGiver=async (lst)=>
     {
-        // const mes = await  giversAPI.addGiver({fname:"rgte",lname:"jjk",phone_number:"23",password:"123", email:"sdfgddsdfg",address:"vxf",age:"4",salary:"ghcg",type:"dfgsd"})
-        // console.log(mes);
-        const ls = await giversAPI.getDaylyGivers();
-        console.log(ls);
+        const mes = await  giversAPI.addGiver({fname:"rgte",lname:"jjk",phone_number:"23",password:"123", email:"sdfgddsdfg",address:"vxf",age:"4",salary:"ghcg",type:"dfgsd"})
+        console.log(mes);
+        //const ls = await giversAPI.getDaylyGivers();
+        //console.log(ls);
+        //await giversAPI.updateGiverWithArea({_id:"6127675a20371c5d10ccf60a",area:"1"})
     }
     const deleteGiver=async(lst)=>
     {

@@ -13,7 +13,9 @@ module.exports = db => {
         email: { type: String, required: true, unique: true, index: true },
         password: { type: String, required: true },
         type: { type: String, required: true },
-        ststus:{ type: String, required: true }
+        ststus:{ type: String, required: true },
+        workToday:{ type: Boolean, required: false },
+        area:{ type: String, required: false }
 
     }, { autoIndex: false });
 
@@ -37,7 +39,9 @@ module.exports = db => {
             email: user[6],
             password: user[7],
             type:user[8],
-            ststus:user[9]
+            ststus:user[9],
+            workToday:user[10],
+            area:user[11],
             
         });
     };

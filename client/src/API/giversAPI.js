@@ -1,5 +1,5 @@
-const getGivers=()=>{
-
+const getGivers=async()=>{
+    var lst2 = new Array();
     const lst=[
         {_id:1, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1},
         {_id:12, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1},
@@ -9,16 +9,13 @@ const getGivers=()=>{
         {_id:16, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1},
 
     ]
-    //  fetch("/blogs.json")
-    //     .then((res) => res.json())
-    //     .then((data1) =>{setPosts(data1);
-    //                     setFlag(true);}
-        
-    //     );
-    return lst;
+    await fetch("/users.json",options).then((response)=>response.json()) .then(response=>{
+       lst2.push(response);
+    });
+    return lst2;
 }
-const getDaylyGivers=()=>{
-
+const getDaylyGivers= async ()=>{
+    var lst2 = new Array();
     const lst=[
         {_id:1, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1,address:"vxf",age:"4",salary:"ghcg",type:"dfgsd",status:"dsfgsdfg",workToday:""},
         {_id:12, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1,address:"vxf",age:"4",salary:"ghcg",type:"dfgsd",status:"dsfgsdfg",workToday:""},
@@ -28,25 +25,60 @@ const getDaylyGivers=()=>{
         {_id:16, name:"rgte",phone_number:23, email:"sdfgsdfg", area:1,address:"vxf",age:"4",salary:"ghcg",type:"dfgsd",status:"dsfgsdfg",workToday:""},
 
     ]
-    //  fetch("/blogs.json")
-    //     .then((res) => res.json())
-    //     .then((data1) =>{setPosts(data1);
-    //                     setFlag(true);}
-
-    //     );
-    return lst;
+    await fetch("/usersDayly.json",options).then((response)=>response.json()) .then(response=>{
+        lst2.push(response);
+     });
+     return lst2;
+    //return lst;
 }
 
-const updateGiverWithArea=(giver)=>{
+const updateGiverWithArea=async(giver)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(giver)
+    };
+    await fetch("/updateGiverWithArea",options);
+
 
 }
-const updateGiver=(giver)=>{
+const updateGiver=async(giver)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(giver)
+    };
+    await fetch("/updetUser",options);
 
 }
-const addGiver=(giver)=>{
+const addGiver= async (giver)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(giver)
+    };
+    await fetch("/addNewUser",options).then((response)=>response.json()) .then(response=>{
+        if (response.data == "false"){
+            return response.message;          
+        }
+    });
 
 }
-const deleteGiver=(giver)=>{
+const deleteGiver=async(giver)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(giver)
+    };
+    await fetch("/deleteUser",options);
 
 }
 

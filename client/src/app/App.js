@@ -62,10 +62,7 @@ export const App = () => {
     return (
 
         !person ?
-            <div>
-                <Chat/>
             <Login setPerson={setPerson}/>
-            </div>
             :
 
 

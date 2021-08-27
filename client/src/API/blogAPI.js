@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-export const BlogAPI= ()=>{
-    const [data,setData]= useState(null);
+
+    //const [data,setData]= useState(null);
 const getBlog= ()=>{
+    var data =[];
 
    const lst=
        [
@@ -35,27 +36,24 @@ const getBlog= ()=>{
                "creationTime": 1529188631674
            }
        ]
-        fetch("/blogs.json")
-        .then((res) => res.json())
-        .then((data1) =>setData(JSON.stringify(data1))
-        
-        );
-   
-    return data;
-}
-
-const updateBlog=(blog)=>{
 
 }
-const addBlog=(blog)=>{
+
+const addBlog=async(blog)=>{
+    const date =new Date();
+       var creationTime =date.valueOf();
+        //const ans={blog,creationTime};
+            const options = {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(blog)
+            };
+            await fetch("/addNewBlog",options);
 
 }
-const deleteBlog=(blog)=>{
-
-}
-return {
+export const BlogAPI= {
     getBlog,
-    updateBlog,
-    addBlog,
-    deleteBlog
-}}
+    addBlog
+}

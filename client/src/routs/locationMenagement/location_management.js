@@ -8,7 +8,7 @@ export const LocationManagement = () => {
         return locationAPI.getLocations()
 
     }
-    const [locationList, setLocationList] = React.useState(getLocations())
+    const [locationList, setLocationList] = React.useState(getLocations());
     const [selectedMarker, setSelectedMarker] = useState(false)
     const [place, setPlace] = useState(null)
     const [newLocation, setNewLocation] = useState({})
@@ -83,7 +83,7 @@ export const LocationManagement = () => {
         setSelectedMarker(marker)
     }
 
-
+    
     console.log("result", locationList)
     return (
         <div>

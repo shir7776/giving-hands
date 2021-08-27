@@ -7,49 +7,86 @@ import {NewPost} from "../../components/blog/newPost";
 import {Post} from "../../components/blog/post";
 import {BlogAPI} from "../../API/blogAPI";
 
-export const Blog = () => {
+export const Blog = ({type}) => {
     //
     const [posts,setPosts] = useState(null);
     const [addPost, setAddPost] = useState(false);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [flag ,setFlag]=useState(false);
+    const [flagAdd ,setFlagAdd]=useState(false);
 
     const [labels, setLabels] = useState(null);
     const newPostVisibility = () => {
         setAddPost(!addPost);
     };
-    React.useEffect(() => {
-        setPosts(BlogAPI().getBlog());
+    const addNewPost =()=>{
+        const date =new Date();
+       var creationTime =date.valueOf();
+       const post={title,content,userEmail,creationTime}
+        BlogAPI.addBlog(post);
+        setAddPost(!addPost);
+        setPosts([post,...posts])
+    }
+    React.useEffect(async() => {
+         await fetch("/blogs.json")
+        .then((res) => res.json())
+        .then((data1) =>{setPosts(data1.reverse());
+                        setFlag(true);}
+        
+        );
     }, []);
+
+//     React.useEffect(async() => {
+//         const date =new Date();
+//        var creationTime =date.valueOf();
+//         console.log(creationTime);
+//         const ans={title,content,userEmail,creationTime};
+//             const options = {
+//                 method: 'POST',
+//                 headers: {
+//                 'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(ans)
+//             };
+//             console.log("befor fetch")
+//             await fetch("/addNewBlog",options);
+//    }, []);
+    
     
 
     const renderPosts = () => {
-        console.log(posts)
         return (<div className={styles.blog}>
             <ul className='tickets'>
+                
                 {posts.map((post, index) => (
                     <Post post={post}/>
                 ))}
             </ul>
         </div>);
+
+        
+        
     };
+
     
 
     return (
         <main>
 
             <body className='body2'>
-            <header>
-                <button onClick={newPostVisibility}>{"Add New Post"}</button>
+            {type&&<header>
+                 <button onClick={newPostVisibility}>{"Add New Post"}</button>
                 {addPost && <NewPost newPostVisibility={newPostVisibility}
-                                     setUserEmail={setUserEmail}
-                                     setTitle={setTitle}
-                                     setLabels={setLabels}
-                                     setContent={setContent}/>}
-            </header>
+                    setUserEmail={setUserEmail}
+                    setTitle={setTitle}
+                    setLabels={setLabels}
+                    setContent={setContent}
+                    addNewPost={addNewPost}/>}
+            </header>}
             <div>
-                { posts ? renderPosts() : <h2>Loading..</h2>}
+                { flag ? renderPosts() : <h2>Loading..</h2>}
 
             </div>
             </body>

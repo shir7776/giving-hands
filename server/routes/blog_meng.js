@@ -1,44 +1,33 @@
-const Blog = require('../../models/blogs');
+const BLOG = require('../../models/blogs.js');
 const express = require('express');
 var router = express.Router();
 // const bcrypt=require('bcrypt');
 
 var MongoClient = require('mongodb').MongoClient;
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
-var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
+//var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
+var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
 router.post('/addNewBlog',async function(req, res,next) {
     try{
+      console.log("in adding new post")
         var blog=[];
-        blog[0]= req.body.id_blog;
-        blog[1]= req.body.title;
-        blog[2] = req.body.content;
-        blog[3] = req.body.email;
-   MongoClient.connect(url, function(err, db) {
-       if (err) throw err;
-       var dbo = db.db("helpHend");
-       var myquery = {id_blog:req.body.id_blog};
-       dbo.collection("blogs").find({myquery}).toArray(function(err, result) {
-        if (err) throw err;
-        if(result.length!=0){
-            setTimeout(() => { res.json({
-                status: 'failed',
-                data:'false',
-                message:"This id_blog is already exist"
-              }); }, 1000);
-      }
-      else{
-        Blog.CREATE(blog);
-        console.log('blog created:' + blog);
-        setTimeout(() => { res.json({
-          status: 'success',
-          data:'true',
-          message:"success"
-        }); }, 1000);   
-     }
-     db.close();
-     });
-    });
+        blog[0]= req.body.title;
+        blog[1] = req.body.content;
+        blog[2] = req.body.userEmail;
+        blog[3]=req.body.creationTime;
+        console.log(blog);
+        await MongoClient.connect(url, async function(err, db) {
+          if (err) throw err;
+          console.log("1");
+          var dbo = db.db("helpHend");
+          var myInsert ={title:req.body.title, content:req.body.content,userEmail:req.body.userEmail,creationTime:req.body.creationTime }
+          console.log("2");
+          var x = await dbo.collection("blogs").insertOne(myInsert);
+          await db.close();
+        });
+        console.log("3");
+    
    }
    catch{
        res.status(500).send();

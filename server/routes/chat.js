@@ -1,12 +1,17 @@
+
+
+
+
 const express = require('express');
 var router = express.Router();
 //const Message = require('../../models/chat');
-
+var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
+
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
 
-mongoose.connect(url , (err) => { 
+mongoose.connect(url , (err) => {
     console.log('mongodb connected',err);
  })
 var Message = mongoose.model('Message',{ name : String, message : String})

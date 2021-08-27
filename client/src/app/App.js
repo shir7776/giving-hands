@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import createApiClient from '../api'
-import { BrowserRouter as Router, Switch,  Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import LoginModal from "react-login-modal";
 import logo from "../logo.jpg"
 import {
@@ -24,61 +24,115 @@ import Statistics from "../routs/statistics/statistics";
 //import Blog from "../routs/blog/blog";
 import {Blog} from "../routs/blog/blogs";
 import {Login} from "../components/login/login";
+import {giversAPI} from "../API/giversAPI";
+import socketClient  from "socket.io-client";
+import {Chat} from "../components/chat/chat";
 
 const api = createApiClient
-class App extends Component {
-    constructor(props){
-        super(props)
-        this.state={
-            login:this.login,
-            currpage:<div>hello</div>
+export const App = () => {
+    const keepLoging = ()=>{
+        let data = JSON.parse(sessionStorage.getItem("user"));
+        if(data==null)
+            return false;
+        let type2 = data['type'];
+        if(type2!=null){
+            return {type: type2};
+        }
+        else{
+            return false;
         }
     }
-    handleSignup = (username, email, password) => {};
-    handleLogin = (username, password) => {}
-    on=()=>{
-        this.setState(
-            {currpage:Home}
-        )
-    }
-    render() {
-        console.log("Host URL"+process.env.PUBLIC_URL);
-        return (
-            // <LoginModal
-            //       handleSignup={this.handleSignup}
-            //       handleLogin={this.handleLogin}
-            //     />
+
+    const [givers, setGivers] = useState(giversAPI.getGivers)
+    const [cuurpage, setCurrpage] = useState(<div>hello</div>)
+    const [person, setPerson] = useState({type:"sfsf"})
+    // const [person, setPerson] = useState(keepLoging)
+    useEffect(() => {
+            setCurrpage(Home)
+        }, []
+    )
 
 
+    console.log("Host URL" + process.env.PUBLIC_URL);
+    const type = person.type === "manager"
+
+
+
+
+    return (
+
+        !person ?
+            <Login setPerson={setPerson}/>
+            :
 
 
             <HashRouter>
                 <div>
-                    <h1>Simple SPA</h1>
+                    <ul className="header2">
+                        <li><img className="Logo" src={logo} alt="Logo"/>
+                            <ul>
+                                <li><NavLink to="/">Home</NavLink></li>
+
+                                {type &&
+                                <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
+                                {type &&
+                                <li><NavLink to="/giversManagement">Givers Management</NavLink>
+                                </li>}
+                                {!type &&
+                                <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink>
+                                </li>}
+                                {type &&
+                                <li><NavLink to="/locationManagement">Location
+                                    Management</NavLink></li>}
+                                {type &&
+                                <li><NavLink to="/statistics">Statistics</NavLink></li>}
+                                <li><NavLink to="/blog">Blog</NavLink></li>
+                                <li className="logout"><NavLink to="/"
+                                                                onClick={() => {sessionStorage.removeItem("user"); setPerson(false);}}>logout</NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
                     <ul className="header">
                         <li><img className="Logo" src={logo} alt="Logo"/></li>
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>
-                        <li><NavLink to="/giversManagement">Givers Management</NavLink></li>
-                        <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink></li>
-                        <li><NavLink to="/locationManagement">Location Management</NavLink></li>
-                        <li><NavLink to="/statistics">Statistics</NavLink></li>
+
+                        {type &&
+                        <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/giversManagement">Givers Management</NavLink></li>}
+                        {!type &&
+                        <li><NavLink to="/giveConfirmation">Give Confirmation</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/locationManagement">Location Management</NavLink></li>}
+                        {type &&
+                        <li><NavLink to="/statistics">Statistics</NavLink></li>}
                         <li><NavLink to="/blog">Blog</NavLink></li>
+                        <li className="logout"><NavLink to="/"
+                                                        onClick={() => setPerson(false)}>logout</NavLink>
+                        </li>
                     </ul>
+
+
+
+
                     <div className="content">
                         <Route exact path="/" component={Home}/>
-                        <Route path="/assignGivers" component={AssignGivers}/>
-                        <Route path="/giversManagement" component={GiversManagement}/>
-                        <Route path="/giveConfirmation" component={GiveConfirmation}/>
-                        <Route path="/locationManagement" component={LocationManagement}/>
-                        <Route path="/statistics" component={Statistics}/>
-                        <Route path="/blog" component={Blog}/>
+                        <Route path="/assignGivers" component={AssignGivers} isAuthed={type}/>
+                        <Route path="/giversManagement" component={GiversManagement}
+                               isAuthed={type}/>
+                        <Route path="/giveConfirmation" component={GiveConfirmation}
+                               isAuthed={type}/>
+                        <Route path="/locationManagement" component={LocationManagement}
+                               isAuthed={type}/>
+                        <Route path="/statistics" component={Statistics} isAuthed={type}/>
+                        <Route path="/blog" render={() => <Blog type={type}/>}/>
                     </div>
                 </div>
             </HashRouter>
-        );
-    }
+    );
+
 }
 
-export default App;
+

@@ -39,13 +39,14 @@ export class Table extends Component {
                                    onRowDelete:this.props.delete? selectedRow => new Promise((resolve, reject) => {
                                        const index = selectedRow.tableData.id;
                                        const updatedRows = [...this.state.data];
+                                       const deletedRow=updatedRows[index]
                                        updatedRows.splice(index, 1);
                                        setTimeout(() => {
                                            // setData(updatedRows)
                                            this.setState({
                                                data:updatedRows
                                            });
-                                           this.state.delete(index);
+                                           this.state.delete(deletedRow);
                                            resolve()
                                        }, 100)
                                    }):null,
@@ -67,6 +68,8 @@ export class Table extends Component {
                                options={{
                                    actionsColumnIndex: -1, addRowPosition: "first",filtering:true
                                }}
+                               style={{"backgroundColor":"#f7fafb"}}
+
                 />
             </div>
         );

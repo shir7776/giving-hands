@@ -2,68 +2,84 @@ import React, {useState} from "react";
 import Table from "../../components/table/table_component";
 import {giversAPI} from "../../API/giversAPI";
 
-export const GiversManagement=()=>{
-    const getGiversList=()=>{
-        let lst=giversAPI.getGivers()
-        return lst;
+export const GiversManagement = () => {
+    const [givers, setGivers] = useState([])
+    const [flag, setFlag] = useState(false)
+
+    React.useEffect(async () => {
+        await fetch("/users.json")
+            .then((res) => res.json())
+            .then((data1) => {
+                    setGivers(data1);
+                    setFlag(true)
+                }
+            );
+    }, []);
+
+    const getGiversList = () => givers
+    console.log(givers)
+
+    const updateGiver = async (giver) => {
+        await giversAPI.updateGiver(giver)
+        console.log("hahahahh")
+    }
+    const addGiver = async (giver) => {
+        const mes = await giversAPI.addGiver(giver)
+        console.log(mes);
+        //const ls = await giversAPI.getDaylyGivers();
+        //console.log(ls);
+        //await giversAPI.updateGiverWithArea({_id:"6127675a20371c5d10ccf60a",area:"1"})
+    }
+    const deleteGiver = async (giver) => {
+        await giversAPI.deleteGiver(giver)
     }
 
-    const getGiversColumns=()=>{
-        let lst=[
+
+    const getGiversColumns = () => {
+        let lst = [
             {
-                title: 'ID', field: 'id', editable: false
+                title: 'ID', field: '_id', editable: false
             },
             {
-                title: 'Name', field: 'name'
+                title: 'First Name', field: 'fname'
             },
             {
-                title: 'Phone Number', field: 'phone'
+                title: 'Last Name', field: 'lname'
             },
             {
-                title: 'Email', field: 'email'
+                title: 'Email', field: 'email',
+            },{
+                title: 'Address', field: 'address'
             },
             {
-                title: 'Area', field: 'area'
-            }
+                title: 'Salary', field: 'salery'
+            },
+            {
+                title: 'Age', field: 'age'
+            },
+            {
+                title: 'Phone Number', field: 'phone_number'
+            },
+            {
+                title: 'Type', field: 'type'
+            },
         ];
         return lst;
     }
-    const updateGiver=(lst)=>
-    {
-        console.log("hahahahh")
-    }
-    const addGiver=(lst)=>
-    {
-        console.log("hahahahh")
-    }
-    const deleteGiver=(lst)=>
-    {
-        console.log("hahahahh")
-    }
-
 
 
     return (
-        // <main>
-        // <body className='body2'>
-        // <header>
-        //     { this.newGiver() }
-        // </header>
-        // </body>
-        // </main>
+        flag?
         <Table
             name={"Givers Management"}
-            data={getGiversList()}
-            columns ={getGiversColumns() }
+            data={givers}
+            columns={getGiversColumns()}
             update={updateGiver}
             delete={deleteGiver}
             add={addGiver}
-        />
+        />:
+            <h2>Loading...</h2>
     );
-
-
-
-
 
 
 }

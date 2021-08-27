@@ -69,7 +69,6 @@ export class AssignGivers extends Component {
                 markers: this.props.markers,
             })
         },1000);
-        console.log("hahahahh")
         this.nonUsedareas()
     }
 

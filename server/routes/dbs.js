@@ -7,7 +7,8 @@ var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
-var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
+var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
+//var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
 
  
 
@@ -15,7 +16,7 @@ router.get("/users.json",function(req,res,next){
      MongoClient.connect(url, function(err, db) {
          if (err) throw err;
          var dbo = db.db("helpHend");
-         dbo.collection("users").find({}).toArray(function(err, result) {
+         dbo.collection("users").find({status:"1"}).toArray(function(err, result) {
            if (err) throw err;
            db.close();
            console.log(result)
@@ -23,6 +24,19 @@ router.get("/users.json",function(req,res,next){
          });
        });
   });
+
+  router.get("/usersDayly.json",function(req,res,next){
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("helpHend");
+        dbo.collection("users").find({status:"1",workToday:true}).toArray(function(err, result) {
+          if (err) throw err;
+          console.log(result)
+          db.close();
+          res.json(result);
+        });
+      });
+ });
 
   router.get("/addresses-for-distribution.json",function(req,res,next){
   MongoClient.connect(url, function(err, db) {
@@ -39,16 +53,12 @@ router.get("/users.json",function(req,res,next){
 });
 
 router.get("/blogs.json",function(req,res,next){
-  console.log("in server")
   MongoClient.connect(url, function(err, db) {
-    console.log("in server2")
     if (err) throw err;
     var dbo = db.db("helpHend");
-    console.log("in server3")
     dbo.collection("blogs").find({}).toArray(function(err, result) {
       if (err) throw err;
       db.close();
-      console.log(result)
       res.json(result);
     });
   });

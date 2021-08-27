@@ -46,8 +46,8 @@ export const App = () => {
 
     const [givers, setGivers] = useState(giversAPI.getGivers)
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
-    const [person, setPerson] = useState({type:"sfsf"})
-    // const [person, setPerson] = useState(keepLoging)
+    // const [person, setPerson] = useState({type:"sfsf"})
+    const [person, setPerson] = useState(keepLoging)
     useEffect(() => {
             setCurrpage(Home)
         }, []
@@ -74,6 +74,8 @@ export const App = () => {
                             <ul>
                                 <li><NavLink to="/">Home</NavLink></li>
 
+                                {type &&
+                                <li><NavLink to="/clusters">Get Area List</NavLink></li>}
                                 {type &&
                                 <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
                                 {type &&

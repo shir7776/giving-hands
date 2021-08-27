@@ -31,13 +31,13 @@ export  function SpacingGrid({givers,locations}) {
     const getGiversColumns = () => {
         let lst = [
             {
-                title: 'First Name', field: 'fname'
+                title: 'First Name', field: 'fname', editable: false
             },
             {
-                title: 'Last Name', field: 'lname'
+                title: 'Last Name', field: 'lname', editable: false
             },
             {
-                title: 'Working Today?', field: 'workToday',
+                title: 'Working Today?', field: 'g',
             },
         ];
         return lst;
@@ -45,7 +45,10 @@ export  function SpacingGrid({givers,locations}) {
     const getLocationsColumns = () => {
         let lst = [
             {
-                title: 'Address', field: 'address'
+                title: 'Address', field: 'address', editable: false
+            },
+            {
+                title: 'Give Today?', field: 'g'
             },
         ];
         return lst;
@@ -53,10 +56,12 @@ export  function SpacingGrid({givers,locations}) {
 
 
     const updateTodaysGiverList=(giver)=>{
+        console.log(giver)
         setTodaysGivers([...todaysGivers,giver])
     }
-    const updateTodaysLocationList=(giver)=>{
-        setTodaysLocations([...todaysLocations,giver])
+    const updateTodaysLocationList=(location)=>{
+        console.log(location)
+        setTodaysLocations([...todaysLocations,location])
     }
 
 const onClick=()=>{
@@ -65,7 +70,7 @@ const onClick=()=>{
 
 
     return (
-        <Grid container className={classes.root} spacing={2}>
+        <Grid container className={classes.root} >
             <Grid item xs={12}>
                 <Grid container justifyContent="center" spacing={2}>
 

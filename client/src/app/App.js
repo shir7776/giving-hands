@@ -24,6 +24,7 @@ import Statistics from "../routs/statistics/statistics";
 //import Blog from "../routs/blog/blog";
 import {Blog} from "../routs/blog/blogs";
 import {Login} from "../components/login/login";
+import {Clusters} from "../routs/clusters/clusters";
 import {giversAPI} from "../API/giversAPI";
 import socketClient  from "socket.io-client";
 import {Chat} from "../components/chat/chat";
@@ -45,8 +46,8 @@ export const App = () => {
 
     const [givers, setGivers] = useState(giversAPI.getGivers)
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
-    const [person, setPerson] = useState({type:"sfsf"})
-    // const [person, setPerson] = useState(keepLoging)
+    // const [person, setPerson] = useState({type:"sfsf"})
+    const [person, setPerson] = useState(keepLoging)
     useEffect(() => {
             setCurrpage(Home)
         }, []
@@ -74,6 +75,8 @@ export const App = () => {
                                 <li><NavLink to="/">Home</NavLink></li>
 
                                 {type &&
+                                <li><NavLink to="/clusters">Get Area List</NavLink></li>}
+                                {type &&
                                 <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
                                 {type &&
                                 <li><NavLink to="/giversManagement">Givers Management</NavLink>
@@ -99,6 +102,8 @@ export const App = () => {
                         <li><NavLink to="/">Home</NavLink></li>
 
                         {type &&
+                        <li><NavLink to="/clusters">Get Area List</NavLink></li>}
+                        {type &&
                         <li><NavLink to="/assignGivers">Assign Givers</NavLink></li>}
                         {type &&
                         <li><NavLink to="/giversManagement">Givers Management</NavLink></li>}
@@ -119,6 +124,7 @@ export const App = () => {
 
                     <div className="content">
                         <Route exact path="/" component={Home}/>
+                        <Route path="/clusters" component={Clusters} isAuthed={type}/>
                         <Route path="/assignGivers" component={AssignGivers} isAuthed={type}/>
                         <Route path="/giversManagement" component={GiversManagement}
                                isAuthed={type}/>

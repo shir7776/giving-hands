@@ -21,13 +21,15 @@ router.post('/addNewAddress',async function(req, res,next) {
     };
        await MongoClient.connect(url, async function(err, db) {
         if (err) throw err;
+        var flag=true;
         var dbo =  db.db("helpHend");
-        var myQray={lat:req.body.lat, lng:req.body.lng};
+        var myQray={lat:req.body.lat, lng:req.body.lng,status:"1"};
         dbo.collection("addresses-for-distribution").find(myQray).toArray( async function(err, result) {
           if (err) throw err;
           console.log(result);
           if(result.length!=0)
           {
+            flag=false;
             setTimeout(() => { res.json({
               status: 'failed',
               data:'false',
@@ -35,7 +37,9 @@ router.post('/addNewAddress',async function(req, res,next) {
             }); }, 1000);
        
           }
-          var x = await dbo.collection("addresses-for-distribution").insertOne(address);     
+          if(flag){
+          var x = await dbo.collection("addresses-for-distribution").insertOne(address);  
+          }   
          await db.close();
         });});
       }catch{

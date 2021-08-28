@@ -26,7 +26,7 @@ import {Blog} from "../routs/blog/blogs";
 import {Login} from "../components/login/login";
 import {Clusters} from "../routs/clusters/clusters";
 import {giversAPI} from "../API/giversAPI";
-import socketClient  from "socket.io-client";
+//import socketClient  from "socket.io-client";
 import {Chat} from "../components/chat/chat";
 
 const api = createApiClient
@@ -46,6 +46,7 @@ export const App = () => {
 
     const [givers, setGivers] = useState(giversAPI.getGivers)
     const [cuurpage, setCurrpage] = useState(<div>hello</div>)
+
     // const [person, setPerson] = useState({type:"sfsf"})
     const [person, setPerson] = useState(keepLoging)
     useEffect(() => {

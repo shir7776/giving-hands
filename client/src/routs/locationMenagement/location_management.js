@@ -4,14 +4,26 @@ import Table from "../../components/table/table_component";
 import {locationAPI} from "../../API/locationAPI";
 
 export const LocationManagement = () => {
-    const getLocations = () => {
-        return locationAPI.getLocations()
-
-    }
-    const [locationList, setLocationList] = React.useState(getLocations());
+    
+    const [flag, setFlag] = useState(false);
+    const [locationList, setLocationList] = React.useState([]);
     const [selectedMarker, setSelectedMarker] = useState(false)
     const [place, setPlace] = useState(null)
     const [newLocation, setNewLocation] = useState({})
+    const getLocations = () => {
+        return locationList;
+
+    }
+
+    React.useEffect(async () => {
+        await fetch("/addresses-for-distribution.json")
+            .then((res) => res.json())
+            .then((data1) => {
+                setLocationList(data1);
+                    setFlag(true);
+                }
+            );
+    }, []);
 
     const getCoordinates = async (quary) => {
         let newQuary = quary.split(" ")
@@ -34,7 +46,7 @@ export const LocationManagement = () => {
     const getLocationsColumns = () => {
         let lst = [
             {
-                title: 'ID', field: 'id', editable: false
+                title: 'ID', field: '_id', editable: false
             },
             {
                 title: 'Address', field: 'address'
@@ -44,39 +56,34 @@ export const LocationManagement = () => {
             },
             {
                 title: 'Longitude', field: 'lng'
-            },
-            {
-                title: 'Area', field: 'area'
             }
         ];
         return lst;
     }
 
-    const updateLocation = (location) => {
-        locationAPI.updateLocation(location)
+    const updateLocation = async(location) => {
+        await locationAPI.updateLocation(location)
     }
     const addLocation = async (newRow) => {
         const location = await getCoordinates(newRow.address)
         if (location) {
             const newRow2 =
                 {
-                    id: newRow.id,
                     address: newRow.address,
                     lat: location.lat,
                     lng: location.lon,
-                    area: 0,
-                    finished: false,
-                    date: Date.now()
                 }
             setLocationList(prevArray => [...prevArray, newRow2])
-            locationAPI.addLocation(location)
+            var mes =await locationAPI.addLocation(location);
+            if(mes!="")
+            alert(mes);
         }
         else{
             alert("could not find this address :(")
         }
     }
-    const deleteLocation = (location) => {
-        console.log("hahahahh")
+    const deleteLocation = async(location) => {
+        await locationAPI.deleteLocation(location);
     }
     const handleClick = (marker, event) => {
         // console.log({ marker })
@@ -86,6 +93,7 @@ export const LocationManagement = () => {
     
     console.log("result", locationList)
     return (
+        
         <div>
             <MyMapComponent
                 isMarkerShown
@@ -97,18 +105,18 @@ export const LocationManagement = () => {
                 markers={locationList}
                 onClick={handleClick}
             />
-
-
-            <Table
+           {flag? <Table
                 name={"Location Management"}
                 data={getLocations()}//I REPLACED THIS FUNCTION IF THERE IS A PROBLEM GO SEA THE ORIGINAL LOCATIONMANAGEMENT FILE
                 columns={getLocationsColumns()}
                 update={updateLocation}
                 delete={deleteLocation}
                 add={addLocation}
-            />
+            />:
+            <h2>Loading...</h2> }
 
         </div>
+            
     );
 
 }

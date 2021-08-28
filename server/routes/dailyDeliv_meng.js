@@ -104,7 +104,7 @@ router.post('/deleteDailyDeliv',async function(req, res,next) {
  MongoClient.connect(url, function(err, db) {
      if (err) throw err;
      var dbo = db.db("helpHend");
-     var myquery = {id_daily:req.body.id_daily, done: "0" };
+     var myquery = {_id:req.body._id, done: "0" };
      var newvalues = {done: "1"};
      dbo.collection("daily-distribution").updateOne(myquery, newvalues, function(err, result) {
        if (err) throw err;

@@ -6,7 +6,6 @@ export const Login = ({setPerson})=>{
     const [password,setPassword]=useState("")
     const login =async(email,password)=>{
         const person= await loginAPI.login(email,password)
-        console.log(email,password,person)
         if(person){
             setPerson(person)
         }

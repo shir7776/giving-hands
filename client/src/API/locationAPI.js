@@ -19,6 +19,7 @@ const getGiversLocations=(id)=>{
 }
 
 const updateLocation=async(location)=>{
+    console.log(location)
     const options = {
         method: 'POST',
         headers: {

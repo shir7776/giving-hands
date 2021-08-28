@@ -4,6 +4,7 @@ var router = express.Router();
 // const bcrypt=require('bcrypt');
 
 var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 //var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
@@ -44,6 +45,7 @@ router.post('/addNewAddress',async function(req, res,next) {
   });
 
 router.post('/updateAddress',async function(req, res,next) {
+  console.log(req.body);
     try{
       var address={
           address:req.body.address,
@@ -54,10 +56,11 @@ router.post('/updateAddress',async function(req, res,next) {
    await MongoClient.connect(url, function(err, db) {
        if (err) throw err;
        var dbo = db.db("helpHend");
-       var myquery = {_id:req.body._id };
+       var myquery = {_id: mongoose.Types.ObjectId(req.body._id) };
        var newvalues = { $set: address};
        dbo.collection("addresses-for-distribution").updateOne(myquery, newvalues, function(err, result) {
          if (err) throw err;
+         console.log(result);
          db.close();
          res.json(result);
        });
@@ -76,8 +79,8 @@ router.post('/deleteAddress',async function(req, res,next) {
    MongoClient.connect(url, function(err, db) {
        if (err) throw err;
        var dbo = db.db("helpHend");
-       var myquery = {_id:req.body._id };
-       var newvalues = {status: "0"};
+       var myquery = {_id: mongoose.Types.ObjectId(req.body._id) };
+       var newvalues = { $set:{status: "0"}};
        dbo.collection("addresses-for-distribution").updateOne(myquery, newvalues, function(err, result) {
          if (err) throw err;
          db.close();

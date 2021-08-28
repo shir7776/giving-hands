@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import Table from "../../components/table/table_component";
-import {giversAPI} from "../../API/giversAPI";
+import {SpacingGrid} from "../../components/grid/grid";
 
 export const Clusters = () => {
     const [givers, setGivers] = useState([])
     const [locations, setLocations] = useState([])
-    const [flag, setFlag] = useState([])
-    const [flag2, setFlag2] = useState([])
+    const [flag, setFlag] = useState(false)
+    const [flag2, setFlag2] = useState("false")
+
 
     React.useEffect(async () => {
         await fetch("/users.json")
@@ -16,6 +16,10 @@ export const Clusters = () => {
                     setFlag(true)
                 }
             );
+    }, []);
+
+    React.useEffect(async () => {
+
         await fetch("/locations.json")
             .then((res) => res.json())
             .then((data1) => {
@@ -26,6 +30,12 @@ export const Clusters = () => {
     }, []);
 
     return (
+        <div>
+
+
+            {flag&&flag2&&<SpacingGrid givers={givers} locations={locations}/>}
+
+        </div>
 
     );
 

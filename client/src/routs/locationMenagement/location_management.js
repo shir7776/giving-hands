@@ -93,7 +93,7 @@ export const LocationManagement = () => {
     
     console.log("result", locationList)
     return (
-        flag?
+        
         <div>
             <MyMapComponent
                 isMarkerShown
@@ -105,17 +105,18 @@ export const LocationManagement = () => {
                 markers={locationList}
                 onClick={handleClick}
             />
-            <Table
+           {flag? <Table
                 name={"Location Management"}
                 data={getLocations()}//I REPLACED THIS FUNCTION IF THERE IS A PROBLEM GO SEA THE ORIGINAL LOCATIONMANAGEMENT FILE
                 columns={getLocationsColumns()}
                 update={updateLocation}
                 delete={deleteLocation}
                 add={addLocation}
-            />
+            />:
+            <h2>Loading...</h2> }
 
-        </div>:
-            <h2>Loading...</h2>
+        </div>
+            
     );
 
 }

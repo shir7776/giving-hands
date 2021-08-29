@@ -11,64 +11,58 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
 
 
 
-router.get('/clusterAlg', function(req, res, next) {
+router.post('/clusterAlg', async function(req, res, next) {
     try{
-    var addresses=req.body.address;
+    var addresses=req.body.addresses;
     var users = req.body.users;
-    var date=req.body.date[0];
     let vectors = new Array();
+    let numberArea=1;
     for (let i = 0 ; i < addresses.length ; i++) {
         vectors[i] = [addresses[i].lat , addresses[i].lng];
         
     }
     var DivByDatelist=[]  
-    console.log("bla"+addresses.length)
     if(addresses.length>users.length){
-        console.log("1")
-        kmeans.clusterize(vectors,{k: users.length }, (err,result) => {
+        kmeans.clusterize(vectors,{k: users.length }, async (err,result) => {
             if (err){
                console.log(err)
               
-            }
-        console.log("2")    
+            }   
         for (let i = 0 ; i < users.length ; i++) {
             let a=[];
+            let lngLat=[];
             let vectorsBit=[];     
             for(let j = 0 ; j < result[i].clusterInd.length ; j++)
             {
                a.push(addresses[result[i].clusterInd[j]]._id)
+               lngLat.push([addresses[result[i].clusterInd[j]].lat,addresses[result[i].clusterInd[j]].lng])
                vectorsBit[j]=0;
             }
-            console.log("3")
-            let userByAdd=
-            {
-            //"date":new Date("2021-08-11T21:00:00.000+00:00"),
-            "date":req.body.date,
-            "userId":users[_id],
-            "addressesBit":vectorsBit,
-            "addresses":a
+            for(let j=0;j<a.length;j++){
+               let userByAdd={
+                  "id_user":"",
+                  "area":numberArea,
+                  "name_addr":a[j],
+                  "finished":false,
+                  "lat":lngLat[j][0],
+                  "lng":lngLat[j][1]
+               }
+               DivByDatelist.push(userByAdd);
+
             }
-            DivByDatelist.push(userByAdd);
-            console.log("4")
+            numberArea++;
         }
-        let query={
-          "date":new Date("2021-08-11T21:00:00.000+00:00"),
-         }
-         divByDate.deleteMany(query, function(err, result) {
-          {
-                 divByDate.insertMany(DivByDatelist, function(err, result) {
-                  if (err)
-                  {
-                     console.log("p2")
-                     return               
-                  }
-                  else
-                  {
-                     res.send(true);
-                  }
-               });
-            }
-      });
+        numberArea=numberArea-1;
+        console.log(DivByDatelist);
+        await MongoClient.connect(url, async function(err, db) {
+         if (err) throw err;
+         console.log("1");
+         var dbo = db.db("helpHend");
+        console.log("2");
+         var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
+         await db.close();
+         res.json(numberArea);
+       });
 });
 }
 else{

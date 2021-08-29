@@ -4,8 +4,10 @@ var router = express.Router();
 // const bcrypt=require('bcrypt');
 
 var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
-var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
+//var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
+var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
 
 
@@ -101,17 +103,47 @@ router.post('/addAddressDaily',async function(req, res,next) {
 
 router.post('/deleteDailyDeliv',async function(req, res,next) {
   try{
- MongoClient.connect(url, function(err, db) {
-     if (err) throw err;
-     var dbo = db.db("helpHend");
-     var myquery = {_id:req.body._id, done: "0" };
-     var newvalues = {done: "1"};
-     dbo.collection("daily-distribution").updateOne(myquery, newvalues, function(err, result) {
-       if (err) throw err;
-       db.close();
-       res.json(result);
-     });
-   });
+    console.log(req.body);
+    var locations =req.body.locations;
+    for(let i=0; i<locations.length;i++){
+        MongoClient.connect(url, async function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("helpHend");
+        console.log(locations[i]);
+        var myquery = {_id:mongoose.Types.ObjectId(locations[i]._id), finished: false };
+        var newvalues = {$set: {finished: true}};
+        await dbo.collection("daily-distribution").updateOne(myquery, newvalues,async function(err, result) {
+          if (err) throw err;
+          await db.close();
+        });
+      });
+    }
+  res.status(200).send();
+  
+ }
+ catch{
+     res.status(500).send();
+   }
+});
+
+router.post('/getLocationsByEmail',async function(req, res,next) {
+  try{
+    var id;
+    MongoClient.connect(url, async function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("helpHend");
+      var myquery = {email:req.body.email,status:"1"};
+      await dbo.collection("users").find(myquery).toArray( async function(err, result) {
+        if (err) throw err;
+        id=String(result[0]._id);
+        var myquery = {id_user:id, finished: false };
+        await  dbo.collection("daily-distribution").find(myquery).toArray( async function(err, result) {
+          if (err) throw err;
+          res.json(result);
+        });
+        await db.close();
+      });
+    });
  }
  catch{
      res.status(500).send();

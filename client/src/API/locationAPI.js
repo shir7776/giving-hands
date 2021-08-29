@@ -62,10 +62,24 @@ const deleteLocation=async(location)=>{
 
 }
 
+const deleteDailyDeliv=async(locations)=>{
+    const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(locations)
+    };
+    await fetch("/deleteDailyDeliv",options);
+
+
+
+}
 export const locationAPI={
     getLocations,
     getGiversLocations,
     updateLocation,
+    deleteDailyDeliv,
     addLocation,
     deleteLocation
 }

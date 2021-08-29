@@ -4,11 +4,34 @@ import {locationAPI} from "../../API/locationAPI";
 
 export const GiveConfirmation=()=>{
     const getLocations=()=>{
-        const lst=locationAPI.getLocations()
+        // let data = JSON.parse(sessionStorage.getItem("user"));
+        // var email =data['email'];
+       // const lst2= await locationAPI.getLocationsByEmail({email:email});
+       // console.log(lst2);
+       const lst=locationAPI.getLocations()
         return lst;
     }
     const [locations,setLocations]=useState(getLocations())
     const [selectedMarker,setSelectedMarker]=useState(false)
+    const [flag,setFlag]=useState(false);
+
+    React.useEffect(async () => {
+        let data = JSON.parse(sessionStorage.getItem("user"));
+        var email =data['email'];
+        var b ={email:email}
+        const options = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(b)
+    };
+    console.log(options.body)
+    await fetch("/getLocationsByEmail",options).then((response)=>response.json()).then(response=>{
+        setLocations(response);
+        setFlag(true);
+    });
+    }, []);
 
     const changeToFinish=(index)=>{
         let newLocations=locations
@@ -16,15 +39,24 @@ export const GiveConfirmation=()=>{
         setLocations(newLocations)
     }
 
-    const updateLocations=()=>{
+    const updateLocations=async()=>{
+        await locationAPI.deleteDailyDeliv({locations:[{
+            _id:"6107d483ddb70e5239a979d4",
+            finished:false,
+            name_addr:"1",
+            area:"1",
+            id_user:"611e33934fe2e555356139de",
+            lat:31,
+            lng:35
+        }]});
         //writing locations back to database
     }
 
-    const     renderLocations=()=>{
+    const renderLocations=()=>{
         return(
-            <form>
+          <form>
                 {
-                    locations.map((loc,index)=>(
+                   locations.map((loc,index)=>(
                         <div>
                             {/*<label >*/}
                             {/*    <input type="checkbox" onChange={()=>{this.changeToFinish(index)}}/>*/}
@@ -35,10 +67,12 @@ export const GiveConfirmation=()=>{
                                 <td style={{"padding":"0 0 0 30%"}}>{loc.address}</td>
                             </tr>
                         </div>
-                    ))
+                    )) 
+                     
                 }
                 <button onClick={updateLocations}>submit</button>
-            </form>
+                </form> 
+
         )
     }
 
@@ -47,8 +81,8 @@ export const GiveConfirmation=()=>{
         this.setState({ selectedMarker: marker })
     }
 
-    return (
-        <div>
+    return flag?(
+         <div>
             <MyMapComponent
                 isMarkerShown
                 googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
@@ -63,8 +97,8 @@ export const GiveConfirmation=()=>{
             {renderLocations()}
 
 
-        </div>
-    );
+        </div> 
+    ):<h2>Loading...</h2>;
 
 
 

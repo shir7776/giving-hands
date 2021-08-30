@@ -6,6 +6,7 @@ var router = express.Router();
 const kmeans = require('node-kmeans');
 
 var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
 
@@ -53,7 +54,6 @@ router.post('/clusterAlg', async function(req, res, next) {
             numberArea++;
         }
         numberArea=numberArea-1;
-        console.log(DivByDatelist);
         await MongoClient.connect(url, async function(err, db) {
          if (err) throw err;
          console.log("1");
@@ -64,6 +64,19 @@ router.post('/clusterAlg', async function(req, res, next) {
          res.json(numberArea);
        });
 });
+for(let i=0;i<users.length;i++){
+await MongoClient.connect(url, async function(err, db) {
+   if (err) throw err;
+   var dbo = db.db("helpHend");
+  var myquery ={_id:mongoose.Types.ObjectId(users[i]._id)}
+  var newvalues={$set:{workToday:true}}
+   await dbo.collection("users").updateOne(myquery, newvalues,async function(err, result) {
+      if (err) throw err;
+      await db.close();
+    });
+ });
+}
+res.json(numberArea);
 }
 else{
 res.send(false)

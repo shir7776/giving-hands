@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from "../table/table_component";
 import {Button} from "@material-ui/core";
 import style from './gridStyle.module.css'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -22,9 +23,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export  function SpacingGrid({givers,locations}) {
+export function SpacingGrid({givers, locations}) {
     const [todaysGivers, setTodaysGivers] = React.useState([]);
     const [todaysLocations, setTodaysLocations] = React.useState([]);
+    const [selectedGivers, setSelectedGivers] = React.useState([]);
+    const [selectedLocations, setSelectedLocations] = React.useState([]);
     const classes = useStyles();
 
 
@@ -55,40 +58,67 @@ export  function SpacingGrid({givers,locations}) {
     }
 
 
-    const updateTodaysGiverList=(giver)=>{
+    const updateTodaysGiverList = (giver) => {
         console.log(giver)
-        setTodaysGivers([...todaysGivers,giver])
+        setTodaysGivers([...todaysGivers, giver])
     }
-    const updateTodaysLocationList=(location)=>{
+    const updateTodaysLocationList = (location) => {
         console.log(location)
-        setTodaysLocations([...todaysLocations,location])
+        setTodaysLocations([...todaysLocations, location])
     }
 
-const onClick=()=>{
-
+    const onClick = async() => {
+const dataForAlgo={
+    addresses:selectedLocations,
+    users:selectedGivers
 }
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataForAlgo)
+        };
+        await fetch("/clusterAlg",options).then((res) => res.json())
+            .then((data1) => {
+                    console.log(data1);
+                }
+            );
+    }
+
+    const onGiverSelectionChange = (rows) => {
+        setSelectedGivers(...rows)
+    }
+    const onLocationSelectionChange = (rows) => {
+        setSelectedLocations(...rows)
+    }
 
 
     return (
-        <Grid container className={classes.root} >
+        <Grid container className={classes.root}>
             <Grid item xs={12}>
                 <Grid container justifyContent="center" spacing={2}>
 
-                        <Grid  item>
-                            <Paper className={style.paper} >
-                                <Table name={"Givers:"} data={givers} columns={getGiversColumns()} update={updateTodaysGiverList}/>
-                            </Paper>
-                        </Grid>
-                        <Grid  item>
-                            <Paper className={style.paper} >
-                                <Table name={"Locations:"} data={locations} columns={getLocationsColumns()} update={updateTodaysLocationList}/>
-                            </Paper>
-                        </Grid>
-                        <Grid  item>
-                            <Paper className={style.paper} >
-                                <Button onClick={onClick} >get me the areas</Button>
-                            </Paper>
-                        </Grid>
+                    <Grid item>
+                        <Paper className={style.paper}>
+                            <Table name={"Givers:"} data={givers} columns={getGiversColumns()}
+                                   update={updateTodaysGiverList} selection={true}
+                                   onSelectionChange={onGiverSelectionChange}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item>
+                        <Paper className={style.paper}>
+                            <Table name={"Locations:"} data={locations}
+                                   columns={getLocationsColumns()} update={updateTodaysLocationList}
+                                   selection={true}
+                                   onSelectionChange={onLocationSelectionChange}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item>
+                        <Paper className={style.paper}>
+                            <Button onClick={onClick}>get me the areas</Button>
+                        </Paper>
+                    </Grid>
 
                 </Grid>
             </Grid>

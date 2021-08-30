@@ -66,9 +66,13 @@ export class Table extends Component {
 
                                }}
                                options={{
-                                   actionsColumnIndex: -1, addRowPosition: "first",filtering:true
+                                   actionsColumnIndex: -1, addRowPosition: "first",filtering:true, selection:this.props.selection
                                }}
                                style={{"backgroundColor":"#f7fafb"}}
+                               onSelectionChange={(rows) => {
+                               this.props.onSelectionChange(rows)
+                               }
+                               }
 
                 />
             </div>

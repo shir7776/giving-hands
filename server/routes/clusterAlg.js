@@ -54,26 +54,49 @@ router.post('/clusterAlg', async function(req, res, next) {
             numberArea++;
         }
         numberArea=numberArea-1;
+        for(let j=0;j<DivByDatelist.length;j++)
+        {
+         await MongoClient.connect(url, async function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("helpHend");
+            var myquery ={_id:mongoose.Types.ObjectId(DivByDatelist[j].name_addr)}
+            await dbo.collection("addresses-for-distribution").find(myquery).toArray(async function(err, result) {
+               if (err) throw err;
+               DivByDatelist[j].name_addr=result[0].address;
+               await db.close();
+             });
+          });
+
+        }
+        console.log(DivByDatelist)
+        await MongoClient.connect(url, async function(err, db) {
+         if (err) throw err;
+         var dbo = db.db("helpHend");
+         var x = await dbo.collection("daily-distribution").deleteMany({});
+         await db.close();
+       });
+
         await MongoClient.connect(url, async function(err, db) {
          if (err) throw err;
          var dbo = db.db("helpHend");
          var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
          await db.close();
        });
-});
-for(let i=0;i<users.length;i++){
-await MongoClient.connect(url, async function(err, db) {
-   if (err) throw err;
-   var dbo = db.db("helpHend");
-  var myquery ={_id:mongoose.Types.ObjectId(users[i]._id)}
-  var newvalues={$set:{workToday:true}}
-   await dbo.collection("users").updateOne(myquery, newvalues,async function(err, result) {
-      if (err) throw err;
-      await db.close();
-    });
- });
-}
-res.json(true);
+
+      for(let i=0;i<users.length;i++){
+            await MongoClient.connect(url, async function(err, db) {
+               if (err) throw err;
+               var dbo = db.db("helpHend");
+            var myquery ={_id:mongoose.Types.ObjectId(users[i]._id)}
+            var newvalues={$set:{workToday:true}}
+               await dbo.collection("users").updateOne(myquery, newvalues,async function(err, result) {
+                  if (err) throw err;
+                  await db.close();
+               });
+            });
+      }
+      });
+res.send(true);
 }
 else{
 res.send(false)

@@ -2,13 +2,13 @@ import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import {locationAPI} from "../../API/locationAPI";
 import Table from "../../components/table/table_component";
-import {Button} from "@material-ui/core";
-import {withStyles} from "@material-ui/core/styles";
+import {ColorButton} from "../../components/button/ColorButton";
 
 export const GiveConfirmation=()=>{
     
     const [locations,setLocations]=useState([])
     const [selectedLocations,setSelectedLocations]=useState([])
+    const [reunselectedLocations,setreunSelectedLocations]=useState([])
     const [selectedMarker,setSelectedMarker]=useState(false)
     const [flag,setFlag]=useState(false);
 
@@ -29,15 +29,14 @@ export const GiveConfirmation=()=>{
     });
     }, []);
 
-    const changeToFinish=(rows)=>{
-        let newLocations=locations
-        newLocations.map(loc=>rows.find(row=>row._id===loc._id)?loc.finished=!loc.finished:loc)//[index].finished=!newLocations[index].finished
-        setLocations(newLocations)
+    const changeToFinish=()=>{
+        const lst=locations.map(loc=>loc.tableData?{...loc,finished:loc.tableData.checked}:loc)
+        setLocations(lst)
     }
 
     const onSelectionChange=(rows)=>{
 
-changeToFinish(rows)
+changeToFinish()//this is wired
         setSelectedLocations([...rows])
         //writing locations back to database
     }
@@ -54,16 +53,7 @@ changeToFinish(rows)
         ];
         return lst;
     }
-    const ColorButton = withStyles((theme) => ({
-        root: {
-            color: "#111",
-            backgroundColor: 'rgba(127, 142, 212, 0.73)',
-            // margin:'0 50%',
-            '&:hover': {
-                backgroundColor: 'rgba(168, 181, 238, 0.73)',
-            },
-        },
-    }))(Button);
+
     const renderLocations=()=>{
         return(
             <>

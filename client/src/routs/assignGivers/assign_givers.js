@@ -55,7 +55,7 @@ export const AssignGivers = (props) => {
     }
     const [isGiversHasDifferentArea, setIsGiversHasDifferentArea] = useState(isEveryGiverHasDifferentArea())
 
-    const updateGiver = (giver) => {
+    const updateGiver = async (giver) => {
         const newGiversList = givers
         const index = newGiversList.findIndex(giver2 => giver2._id === giver._id)
         newGiversList[index] = giver;
@@ -63,7 +63,7 @@ export const AssignGivers = (props) => {
         setAreaList(areaList.filter(area => !givers
             .some(giver => Number(giver.area) === area)))
         nonUsedAreas()
-        giversAPI.updateGiverWithArea(giver)
+        await giversAPI.updateGiverWithArea(giver)
         setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
 
 

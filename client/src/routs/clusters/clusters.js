@@ -116,7 +116,6 @@ export const Clusters = () => {
 
 
             {flag&&flag2&&<SpacingGrid givers={givers} locations={locations}/>}
-            <button onClick = {clusterAlg} >clusterAlg</button>
 
         </div>
 

@@ -73,18 +73,19 @@ const dataForAlgo={
             },
             body: JSON.stringify(dataForAlgo)
         };
+console.log(options.body)
         await fetch("/clusterAlg",options).then((res) => res.json())
             .then((data1) => {
-                    console.log(data1);
+                    console.log('data:',data1);
                 }
             );
     }
 
     const onGiverSelectionChange = (rows) => {
-        setSelectedGivers(...rows)
+        setSelectedGivers([...rows])
     }
     const onLocationSelectionChange = (rows) => {
-        setSelectedLocations(...rows)
+        setSelectedLocations([...rows])
     }
 
 

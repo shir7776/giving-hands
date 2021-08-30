@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from "../table/table_component";
 import {Button} from "@material-ui/core";
 import style from './gridStyle.module.css'
-
+import {clusterAlgAPI} from "../../API/clusterAlgAPI";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -62,23 +62,11 @@ export function SpacingGrid({givers, locations}) {
     }
 
     const onClick = async() => {
-const dataForAlgo={
-    addresses:selectedLocations,
-    users:selectedGivers
-}
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataForAlgo)
-        };
-console.log(options.body)
-        await fetch("/clusterAlg",options).then((res) => res.json())
-            .then((data1) => {
-                    console.log('data:',data1);
-                }
-            );
+        const dataForAlgo={
+            addresses:selectedLocations,
+            users:selectedGivers
+            }
+        await clusterAlgAPI.clusterAlg(dataForAlgo);
     }
 
     const onGiverSelectionChange = (rows) => {

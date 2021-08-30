@@ -23,6 +23,17 @@ router.get("/users.json",function(req,res,next){
          });
        });
   });
+  router.get("/givers.json",function(req,res,next){
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("helpHend");
+        dbo.collection("users").find({type:"giver",status:"1"}).toArray(function(err, result) {
+          if (err) throw err;
+          db.close();
+          res.json(result);
+        });
+      });
+ });
 
   router.get("/usersDayly.json",function(req,res,next){
     MongoClient.connect(url, function(err, db) {

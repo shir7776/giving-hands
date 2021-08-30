@@ -53,11 +53,9 @@ export function SpacingGrid({givers, locations}) {
 
 
     const updateTodaysGiverList = (giver) => {
-        console.log(giver)
         setTodaysGivers([...todaysGivers, giver])
     }
     const updateTodaysLocationList = (location) => {
-        console.log(location)
         setTodaysLocations([...todaysLocations, location])
     }
 
@@ -66,7 +64,11 @@ export function SpacingGrid({givers, locations}) {
             addresses:selectedLocations,
             users:selectedGivers
             }
-        await clusterAlgAPI.clusterAlg(dataForAlgo);
+        var mes =await clusterAlgAPI.clusterAlg(dataForAlgo);
+        if(mes==true)
+        alert("Now you can go to assign givers and connect giver to area.")
+        else
+        alert("Somthing worng happend, try again later...")
     }
 
     const onGiverSelectionChange = (rows) => {

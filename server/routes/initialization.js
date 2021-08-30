@@ -16,9 +16,7 @@ try{
         var myquery = {status: "1", workToday: true };
         var newvalues = { $set: {workToday: false, area:"0"} };
         await dbo.collection("users").updateOne(myquery, newvalues, async function(err, result) {
-          if (err) throw err;
-          console.log(result)
-        console.log("1 document updated");  
+          if (err) throw err; 
         await db.close();
         });
       });

@@ -15,7 +15,6 @@ export class Table extends Component {
             add:props.add,
             name:props.name
         }
-        console.log(this.state.columns)
     }
      theme = createMuiTheme({
         palette: {

@@ -35,7 +35,6 @@ router.post('/addAddressDaily',async function(req, res,next) {
          }
          else{
             DD.CREATE(daily_distr);
-            console.log('daily_distr created:' + daily_distr);
             setTimeout(() => { res.json({
               status: 'success',
               data:'true',
@@ -103,13 +102,11 @@ router.post('/addAddressDaily',async function(req, res,next) {
 
 router.post('/deleteDailyDeliv',async function(req, res,next) {
   try{
-    console.log(req.body);
     var locations =req.body.locations;
     for(let i=0; i<locations.length;i++){
         MongoClient.connect(url, async function(err, db) {
         if (err) throw err;
         var dbo = db.db("helpHend");
-        console.log(locations[i]);
         var myquery = {_id:mongoose.Types.ObjectId(locations[i]._id), finished: false };
         var newvalues = {$set: {finished: true}};
         await dbo.collection("daily-distribution").updateOne(myquery, newvalues,async function(err, result) {

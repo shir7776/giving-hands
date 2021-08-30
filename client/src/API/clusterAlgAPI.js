@@ -1,5 +1,4 @@
 const clusterAlg=async(dataForAlgo)=>{
-    console.log(dataForAlgo)
     const options = {
         method: 'POST',
         headers: {
@@ -7,12 +6,13 @@ const clusterAlg=async(dataForAlgo)=>{
         },
         body: JSON.stringify(dataForAlgo)
     };
-
+var mes="";
     await fetch("/clusterAlg",options).then((res) => res.json())
         .then((data1) => {
-                console.log('data:',data1);
+            mes=data1;
             }
         );
+        return mes;
 }
 
 export const clusterAlgAPI={

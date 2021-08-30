@@ -26,7 +26,7 @@ router.post('/clusterAlg', async function(req, res, next) {
     if(addresses.length>users.length){
         kmeans.clusterize(vectors,{k: users.length }, async (err,result) => {
             if (err){
-               console.log(err)
+               throw err;
               
             }   
         for (let i = 0 ; i < users.length ; i++) {
@@ -56,9 +56,7 @@ router.post('/clusterAlg', async function(req, res, next) {
         numberArea=numberArea-1;
         await MongoClient.connect(url, async function(err, db) {
          if (err) throw err;
-         console.log("1");
          var dbo = db.db("helpHend");
-        console.log("2");
          var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
          await db.close();
        });
@@ -75,13 +73,13 @@ await MongoClient.connect(url, async function(err, db) {
     });
  });
 }
-res.json(numberArea);
+res.json(true);
 }
 else{
 res.send(false)
 }
 }catch(e){
-       console.log(e);
+       res.send(false);
     }
  });
 

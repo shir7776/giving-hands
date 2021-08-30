@@ -21,7 +21,7 @@ export const AssignGivers = (props) => {
                     setFlag(true)
                 }
             );
-            await fetch("daily-distribution.json").then((res) => res.json())
+        await fetch("daily-distribution.json").then((res) => res.json())
             .then((data1) => {
                     setLocations(data1);
                     setFlag2(true)
@@ -30,21 +30,22 @@ export const AssignGivers = (props) => {
     }, []);
     React.useEffect(async () => {
         setAreaList(getAreaList)
+        setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
     }, [givers]);
 
 
     const getAreaList = () => {
         const lst = []
-        for (var i = 1; i < givers.length; i++) {
+        for (var i = 1; i <= givers.length; i++) {
             lst.push(i);
         }
         return lst.filter(area => !givers
             .some(giver => Number(giver.area) === area))
     }
-    
+
     const [selectedMarker, setSelectedMarker] = useState(false)
 
-    const nonUsedAreas = () => {
+    const NonUsedAreas = () => {
         return (
 
             <ul>
@@ -73,9 +74,8 @@ export const AssignGivers = (props) => {
         setGivers(newGiversList)
         setAreaList(areaList.filter(area => !givers
             .some(giver => Number(giver.area) === area)))
-        nonUsedAreas()
         await giversAPI.updateGiverWithArea(giver)
-        setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
+        // await setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
 
     }
 
@@ -103,11 +103,11 @@ export const AssignGivers = (props) => {
     const handleClick = (marker, event) => {
         setSelectedMarker(marker)
     }
-    return flag&&flag2?(
-        
+    return flag && flag2 ? (
+
         <div>
 
-           <MyMapComponent
+            <MyMapComponent
                 isMarkerShown
                 googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{height: `100%`}}/>}
@@ -118,16 +118,16 @@ export const AssignGivers = (props) => {
                 onClick={handleClick}
             />
             <h3>Areas Left To Assign:</h3>
-            {nonUsedAreas()}
-            {isGiversHasDifferentArea &&
+            <NonUsedAreas/>
+            {!isEveryGiverHasDifferentArea() &&
             <h4 className={style.redHeadline}>You Cannot Assign Two Givers To The Same Area</h4>}
-             <Table
+            <Table
                 name={"Assign Givers"}
                 data={givers}
                 columns={getGiversColumns()}
                 update={updateGiver}
-            /> 
+            />
         </div>
-        
-    ):<h2>Loading..</h2>;
+
+    ) : <h2>Loading..</h2>;
 }

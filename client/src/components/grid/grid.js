@@ -1,10 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
 import Table from "../table/table_component";
 import {Button} from "@material-ui/core";
@@ -87,14 +83,14 @@ export function SpacingGrid({givers, locations}) {
                     <Grid item>
                         <Paper className={style.paper}>
                             <Table name={"Givers:"} data={givers} columns={getGiversColumns()}
-                                   update={updateTodaysGiverList} selection={true}
+                                   selection={true}
                                    onSelectionChange={onGiverSelectionChange}/>
                         </Paper>
                     </Grid>
                     <Grid item>
                         <Paper className={style.paper}>
                             <Table name={"Locations:"} data={locations}
-                                   columns={getLocationsColumns()} update={updateTodaysLocationList}
+                                   columns={getLocationsColumns()}
                                    selection={true}
                                    onSelectionChange={onLocationSelectionChange}/>
                         </Paper>

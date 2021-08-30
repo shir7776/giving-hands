@@ -56,7 +56,19 @@ export const LocationManagement = () => {
     }
 
     const updateLocation = async(location) => {
+        const loc=locationList.filter(l=>location._id===l._id)
+        if(loc[0].address!==location.address)
+        {
+            const addr=await getCoordinates(location.address)
+            location =
+                {
+                    address: location.address,
+                    lat: addr.lat,
+                    lng: addr.lon,
+                }
+        }
         await locationAPI.updateLocation(location)
+        window.location.reload(true);
     }
     const addLocation = async (newRow) => {
         const location = await getCoordinates(newRow.address)

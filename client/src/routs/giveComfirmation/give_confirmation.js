@@ -5,11 +5,8 @@ import Table from "../../components/table/table_component";
 import {Button} from "@material-ui/core";
 
 export const GiveConfirmation=()=>{
-    const getLocations=()=>{
-       const lst=locationAPI.getLocations()
-        return lst;
-    }
-    const [locations,setLocations]=useState(getLocations())
+    
+    const [locations,setLocations]=useState([])
     const [selectedLocations,setSelectedLocations]=useState([])
     const [selectedMarker,setSelectedMarker]=useState(false)
     const [flag,setFlag]=useState(false);

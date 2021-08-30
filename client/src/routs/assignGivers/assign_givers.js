@@ -7,8 +7,10 @@ import style from './assingGiversStyle.module.css'
 
 export const AssignGivers = (props) => {
 
+    const [locations, setLocations] = useState([])
     const [givers, setGivers] = useState([])
     const [flag, setFlag] = useState(false)
+    const [flag2, setFlag2] = useState(false)
     const [areaList, setAreaList] = useState([])
 
     React.useEffect(async () => {
@@ -17,6 +19,12 @@ export const AssignGivers = (props) => {
             .then((data1) => {
                     setGivers(data1);
                     setFlag(true)
+                }
+            );
+            await fetch("daily-distribution.json").then((res) => res.json())
+            .then((data1) => {
+                    setLocations(data1);
+                    setFlag2(true)
                 }
             );
     }, []);
@@ -30,7 +38,7 @@ export const AssignGivers = (props) => {
         return lst.filter(area => !givers
             .some(giver => Number(giver.area) === area))
     }
-    const [locations, setLocations] = useState(locationAPI.getLocations())
+    
     const [selectedMarker, setSelectedMarker] = useState(false)
 
     const nonUsedAreas = () => {
@@ -93,10 +101,11 @@ export const AssignGivers = (props) => {
         console.log({marker})
         setSelectedMarker(marker)
     }
-    return (
+    return flag&&flag2?(
+        
         <div>
 
-            <MyMapComponent
+           <MyMapComponent
                 isMarkerShown
                 googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{height: `100%`}}/>}
@@ -110,14 +119,13 @@ export const AssignGivers = (props) => {
             {nonUsedAreas()}
             {isGiversHasDifferentArea &&
             <h4 className={style.redHeadline}>You Cannot Assign Two Givers To The Same Area</h4>}
-            {flag ? <Table
+             <Table
                 name={"Assign Givers"}
                 data={givers}
                 columns={getGiversColumns()}
                 update={updateGiver}
-            /> : <h2>Loading...</h2>}
-
-
+            /> 
         </div>
-    );
+        
+    ):<h2>Loading..</h2>;
 }

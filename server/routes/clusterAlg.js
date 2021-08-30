@@ -42,7 +42,7 @@ router.post('/clusterAlg', async function(req, res, next) {
             for(let j=0;j<a.length;j++){
                let userByAdd={
                   "id_user":"",
-                  "area":string(numberArea),
+                  "area":String(numberArea),
                   "name_addr":a[j],
                   "finished":false,
                   "lat":lngLat[j][0],
@@ -61,7 +61,6 @@ router.post('/clusterAlg', async function(req, res, next) {
         console.log("2");
          var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
          await db.close();
-         res.json(numberArea);
        });
 });
 for(let i=0;i<users.length;i++){

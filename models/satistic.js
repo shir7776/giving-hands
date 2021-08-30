@@ -1,13 +1,13 @@
 const debug = require("debug")("mongo:model-user");
+const { Int32 } = require("mongodb");
 const mongo = require("mongoose");
 
 module.exports = db => {
     // create a schema
     let schema = new mongo.Schema({
         date: { type: Date, required: true,unique: true, index: true },
-        distributed: { type: String, required: true },
-        not_distributed: { type: String, required: true },
-        area: { type: Int, required: true }
+        distributed: { type: Int32, required: true },
+        not_distributed: { type: Int32, required: true }
        
 
     }, { autoIndex: false });
@@ -25,8 +25,7 @@ module.exports = db => {
         return this.create({
             date: stat[0],
             distributed: stat[1],
-            not_distributed: stat[2],
-            area:stat[3]
+            not_distributed: stat[2]
             
         });
     };

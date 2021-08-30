@@ -88,6 +88,18 @@ router.get("/daily-distribution.json",function(req,res,next){
       });
     });
   });
+  router.get("/statistics.json",function(req,res,next){
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("helpHend");
+      dbo.collection("statistics").find({}).toArray(function(err, result) {
+        if (err) throw err;
+        db.close();
+        res.json(result.sort((a,b)=>a.date-b.date));
+      });
+    });
+  });
+
 
   
 

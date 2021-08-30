@@ -83,6 +83,7 @@ changeToFinish(rows)
     const handleClick = (marker, event) => {
         this.setState({ selectedMarker: marker })
     }
+    
 
     return flag?(
          <div>

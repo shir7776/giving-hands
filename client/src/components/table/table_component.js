@@ -27,6 +27,7 @@ export class Table extends Component {
         },
 
     });
+
     render() {
 
 

@@ -66,9 +66,6 @@ export const AssignGivers = (props) => {
         await giversAPI.updateGiverWithArea(giver)
         setIsGiversHasDifferentArea(isEveryGiverHasDifferentArea())
 
-
-
-
     }
 
 

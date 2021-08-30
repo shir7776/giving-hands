@@ -34,7 +34,10 @@ export const AssignGivers = (props) => {
 
 
     const getAreaList = () => {
-        const lst = [1, 2, 3, 4, 5]
+        const lst = []
+        for (var i = 1; i < givers.length; i++) {
+            lst.push(i);
+        }
         return lst.filter(area => !givers
             .some(giver => Number(giver.area) === area))
     }

@@ -4,5 +4,11 @@ padding: 4px;
 }
 
 .button{
-    background-color: rgba(184,236,255,0.8);
+    background-color: rgba(127, 142, 212, 0.73);
+}
+.button:hover{
+    background-color: rgba(168, 181, 238, 0.73);
+}
+.buttonHolder{
+    align-content: center;
 }

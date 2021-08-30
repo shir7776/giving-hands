@@ -21,7 +21,7 @@ export const Clusters = () => {
 
     React.useEffect(async () => {
 
-        await fetch("/locations.json")
+        await fetch("/addresses-for-distribution.json")
             .then((res) => res.json())
             .then((data1) => {
                     setLocations(data1);

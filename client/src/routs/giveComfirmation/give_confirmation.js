@@ -2,13 +2,10 @@ import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import {locationAPI} from "../../API/locationAPI";
 import Table from "../../components/table/table_component";
+import {Button} from "@material-ui/core";
 
 export const GiveConfirmation=()=>{
     const getLocations=()=>{
-        // let data = JSON.parse(sessionStorage.getItem("user"));
-        // var email =data['email'];
-       // const lst2= await locationAPI.getLocationsByEmail({email:email});
-       // console.log(lst2);
        const lst=locationAPI.getLocations()
         return lst;
     }
@@ -45,18 +42,11 @@ export const GiveConfirmation=()=>{
     const onSelectionChange=(rows)=>{
 
 changeToFinish(rows)
+        setSelectedLocations([...rows])
         //writing locations back to database
     }
     const updateLocations=async()=>{
-        await locationAPI.deleteDailyDeliv({locations:[{
-            _id:"6107d483ddb70e5239a979d4",
-            finished:false,
-            name_addr:"1",
-            area:"1",
-            id_user:"611e33934fe2e555356139de",
-            lat:31,
-            lng:35
-        }]});
+        await locationAPI.deleteDailyDeliv({locations:selectedLocations});
         //writing locations back to database
     }
     const getLocationsColumns = () => {
@@ -78,24 +68,8 @@ changeToFinish(rows)
                     selection={true}
                     onSelectionChange={onSelectionChange}
                 />
-          <form>
-                {
-                   locations.map((loc,index)=>(
-                        <div>
-                            {/*<label >*/}
-                            {/*    <input type="checkbox" onChange={()=>{this.changeToFinish(index)}}/>*/}
-                            {/*    <span >{loc.address}</span>*/}
-                            {/*</label>*/}
-                            <tr>
-                                <td>{<input style={{"width":"auto"}} type="checkbox" onChange={()=>{changeToFinish(index)}}/>}</td>
-                                <td style={{"padding":"0 0 0 30%"}}>{loc.address}</td>
-                            </tr>
-                        </div>
-                    )) 
-                     
-                }
-                <button onClick={updateLocations}>submit</button>
-                </form>
+
+                <Button onClick={updateLocations}>submit</Button>
     </>
         )
     }

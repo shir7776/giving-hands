@@ -74,7 +74,7 @@ export const LocationManagement = () => {
                     lng: location.lon,
                 }
             setLocationList(prevArray => [...prevArray, newRow2])
-            var mes =await locationAPI.addLocation(location);
+            var mes =await locationAPI.addLocation(newRow2);
             if(mes!="")
             alert(mes);
         }

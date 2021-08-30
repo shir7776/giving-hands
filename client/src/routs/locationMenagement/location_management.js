@@ -62,6 +62,7 @@ export const LocationManagement = () => {
             const addr=await getCoordinates(location.address)
             location =
                 {
+                    _id:location._id,
                     address: location.address,
                     lat: addr.lat,
                     lng: addr.lon,

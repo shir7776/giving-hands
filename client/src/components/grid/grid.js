@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles, MuiThemeProvider,withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from "../table/table_component";
@@ -74,7 +74,26 @@ export function SpacingGrid({givers, locations}) {
         setSelectedLocations([...rows])
     }
 
+    const theme2 = createMuiTheme({
+        palette: {
+            primary: {
+                main: '#4caf50',
+            },
+            secondary: {
+                main: 'rgba(82, 103, 207, 0.73)',
+            },
+        },
 
+    });
+    const ColorButton = withStyles((theme) => ({
+        root: {
+            color: "#111",
+            backgroundColor: 'rgba(127, 142, 212, 0.73)',
+            '&:hover': {
+                backgroundColor: 'rgba(168, 181, 238, 0.73)',
+            },
+        },
+    }))(Button);
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12}>
@@ -96,7 +115,7 @@ export function SpacingGrid({givers, locations}) {
                         </Paper>
                     </Grid>
                     <Grid item className={style.buttonHolder}>
-                            <Button className={style.button} onClick={onClick}>get me the areas</Button>
+                            <ColorButton className={style.button} onClick={onClick}>get me the areas</ColorButton>
                     </Grid>
 
                 </Grid>

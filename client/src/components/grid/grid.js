@@ -39,9 +39,6 @@ export function SpacingGrid({givers, locations}) {
             {
                 title: 'Last Name', field: 'lname', editable: false
             },
-            {
-                title: 'Working Today?', field: 'g',
-            },
         ];
         return lst;
     }
@@ -49,9 +46,6 @@ export function SpacingGrid({givers, locations}) {
         let lst = [
             {
                 title: 'Address', field: 'address', editable: false
-            },
-            {
-                title: 'Give Today?', field: 'g'
             },
         ];
         return lst;

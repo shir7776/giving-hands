@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import {locationAPI} from "../../API/locationAPI";
+import Table from "../../components/table/table_component";
 
 export const GiveConfirmation=()=>{
     const getLocations=()=>{
@@ -12,6 +13,7 @@ export const GiveConfirmation=()=>{
         return lst;
     }
     const [locations,setLocations]=useState(getLocations())
+    const [selectedLocations,setSelectedLocations]=useState([])
     const [selectedMarker,setSelectedMarker]=useState(false)
     const [flag,setFlag]=useState(false);
 
@@ -33,12 +35,18 @@ export const GiveConfirmation=()=>{
     });
     }, []);
 
-    const changeToFinish=(index)=>{
+    const changeToFinish=(rows)=>{
         let newLocations=locations
-        newLocations[index].finished=!newLocations[index].finished
+        newLocations.map(loc=>rows.find(row=>row._id===loc._id)?loc.finished=!loc.finished:loc)//[index].finished=!newLocations[index].finished
         setLocations(newLocations)
+        console.log(newLocations)
     }
 
+    const onSelectionChange=(rows)=>{
+
+changeToFinish(rows)
+        //writing locations back to database
+    }
     const updateLocations=async()=>{
         await locationAPI.deleteDailyDeliv({locations:[{
             _id:"6107d483ddb70e5239a979d4",
@@ -51,9 +59,25 @@ export const GiveConfirmation=()=>{
         }]});
         //writing locations back to database
     }
+    const getLocationsColumns = () => {
+        let lst = [
+            {
+                title: 'Address', field: 'name_addr'
+            },
+        ];
+        return lst;
+    }
 
     const renderLocations=()=>{
         return(
+            <>
+                <Table
+                    name={"Give Confirmation"}
+                    data={locations}//I REPLACED THIS FUNCTION IF THERE IS A PROBLEM GO SEA THE ORIGINAL LOCATIONMANAGEMENT FILE
+                    columns={getLocationsColumns()}
+                    selection={true}
+                    onSelectionChange={onSelectionChange}
+                />
           <form>
                 {
                    locations.map((loc,index)=>(
@@ -71,8 +95,8 @@ export const GiveConfirmation=()=>{
                      
                 }
                 <button onClick={updateLocations}>submit</button>
-                </form> 
-
+                </form>
+    </>
         )
     }
 

@@ -72,9 +72,6 @@ export const AssignGivers = (props) => {
     const getGiversColumns = () => {
         let lst = [
             {
-                title: 'ID', field: '_id', editable: false
-            },
-            {
                 title: 'First Name', field: 'fname', editable: false
             },
             {

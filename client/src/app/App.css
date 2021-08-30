@@ -52,7 +52,7 @@ ul.header li {
   margin: 0;
 }
 ul.header {
-  background-color: #111;
+  background-color: #001a35;
   padding: 0;
 }
 ul.header. li.logout{
@@ -62,15 +62,15 @@ ul.header li a {
   color: #FFF;
   font-weight: bold;
   text-decoration: none;
-  padding: 20px;
+  padding: 20px 15px;
   display: inline-block;
 }
 ul.header li a:hover {
-  background-color: rgb(47, 47, 47);
+  background-color: #012647;
 
 }
 .content {
-  background-color: #FFF;
+  background-color: rgb(248, 255, 255);
   padding: 20px;
 }
 .content h2 {
@@ -142,10 +142,10 @@ ul li ul li {
   width: 100%;
 }
 ul li ul li a {
-  background-color: rgb(0, 0, 0);
+  background-color: #001a35;
 }
 ul li ul li a:hover {
-  background-color: rgb(47, 47, 47);
+  background-color: #012647;
 }
 ul li:hover > ul,
 ul.header2 li ul:hover {
@@ -154,10 +154,10 @@ ul.header2 li ul:hover {
   z-index: 44;
 }
 
-@media (max-width: 1340px) {
+@media (max-width: 1250px) {
   ul.header     { display: none; }
 }
-@media (min-width: 1341px) {
+@media (min-width: 1251px) {
   ul.header2 { display: none }
 }
 

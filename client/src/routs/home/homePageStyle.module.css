@@ -1,0 +1,19 @@
+.body{
+    text-align: center;
+}
+.image{
+    width:100%;
+    opacity:70%;
+}
+.text-center, .header,.content, .bottom{
+    align-text: center;
+}
+ .header{
+font-size: 5vw;
+}
+.content {
+    font-size: 2vw;
+}
+.bottom{
+   font-size:  3.5vw;
+}

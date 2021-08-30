@@ -64,7 +64,7 @@ export class Table extends Component {
                                            resolve()
                                        }, 100)
                                    }):null,
-                                   onRowUpdate: (updatedRow, oldRow) => new Promise((resolve, reject) => {
+                                   onRowUpdate:this.props.update? (updatedRow, oldRow) => new Promise((resolve, reject) => {
                                        const index = oldRow.tableData.id;
                                        const updatedRows = [...this.state.data]
                                        updatedRows[index] = updatedRow
@@ -76,7 +76,7 @@ export class Table extends Component {
                                            this.state.update(updatedRows[index])
                                            resolve()
                                        }, 100)
-                                   })
+                                   }):null
 
                                }}
                                options={{

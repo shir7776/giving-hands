@@ -72,7 +72,7 @@ export class MyMapComponent extends Component {
                                 {this.state.selectedMarker === marker &&
                                 <InfoWindow>
                                     <div>
-                                        {marker.address + " || area key: " + marker.area}
+                                        {marker.name_addr?marker.name_addr + " ||  area-number: " + marker.area:""}
                                     </div>
                                 </InfoWindow>}
 

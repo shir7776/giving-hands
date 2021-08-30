@@ -4,6 +4,8 @@ import React, {useState} from "react";
 import {locationAPI} from "../../API/locationAPI";
 import {giversAPI} from "../../API/giversAPI";
 import style from './assingGiversStyle.module.css'
+import loadingGIF from "../../loading.gif";
+import {Loading} from "../../components/loading/loading";
 
 export const AssignGivers = (props) => {
 
@@ -95,7 +97,7 @@ export const AssignGivers = (props) => {
                 title: 'Phone Number', field: 'phone_number', editable: false
             },
             {
-                title: 'Area', field: 'area'
+                title: 'Area', field: 'area',validate: rowData => rowData.area === '' ? 'Area cannot be empty' : ''
             },
         ];
         return lst;
@@ -129,5 +131,5 @@ export const AssignGivers = (props) => {
             />
         </div>
 
-    ) : <h2>Loading..</h2>;
+    ) : <Loading/>;
 }

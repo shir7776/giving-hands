@@ -1,98 +1,121 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 
-import { withScriptjs, withGoogleMap, GoogleMap, Marker,InfoWindow } from "react-google-maps"
-import MyMapComponent from "../../components/map/map_component"
-// import "./checkbox.css"
 
-class Statistics extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            locations: [],
-            selectedMarker: false,
-            giverArea:1
-        }
+import Paper from '@material-ui/core/Paper';
+import {
+    ArgumentAxis,
+    ValueAxis,
+    Chart,
+    BarSeries,
+} from '@devexpress/dx-react-chart-material-ui';
+import {MyChart} from "./BarChart";
+import {withStyles} from "@material-ui/core/styles";
+import {ColorButton} from '../../components/button/ColorButton';
+// import Example from "./chart";
+export const Statistics = () => {
+    const [data, setData] = useState([])
+    const [day, setDay] = useState(false)
+    const [week, setWeek] = useState(false)
+    const [month, setMonth] = useState(false)
+
+
+    const setAllToFalse = () => {
+        setDay(false)
+        setMonth(false)
+        setWeek(false)
     }
 
-    componentDidMount() {
+    const makeNormalDate = (data) => {
+        // const date=new Date('2021-08-15T21:00:00.000Z')
 
-                this.setState({ locations: [
-                    {address:"1", lat:31,lng:35,id:1,area:1,finished:false},
-                        {address:"2", lat:32,lng:35,id:2,area:2,finished:false},
-                        {address:"3", lat:31,lng:34,id:3,area:3,finished:false}
-                        ]})
-
-    }
-    handleClick = (marker, event) => {
-        this.setState({ selectedMarker: marker })
-    }
-
-    changeToFinish=(index)=>{
-        let newLocations=this.state.locations
-        newLocations[index].finished=!newLocations[index].finished
-        this.setState({
-            locations:newLocations
+        return data.map(obj => {
+            const date = new Date(obj.date)
+console.log('day',date.getDay(),date)
+            return {...obj, date: `${date.getDate()}/${date.getMonth()+1}`}
         })
     }
-
-    updateLocations=()=>{
-        //writing locations back to database
+    const filterWeek = (data) => {
+        const thisValues = data.filter(obj => {
+            const date = new Date(obj.date)
+            var lastWeek = new Date()
+            lastWeek.setDate(lastWeek.getDate() - 7)
+            console.log('lastWeek', lastWeek)
+            if (date < lastWeek)
+                return false
+            else
+                return true
+        })
+        return (thisValues)
+    }
+    const filterMonth = (data) => {
+        const thisValues = data.filter(obj => {
+            const date = new Date(obj.date)
+            var lastmonth = new Date()
+            lastmonth.setMonth(lastmonth.getMonth() - 1)
+            console.log('lastWeek', lastmonth)
+            if (date < lastmonth)
+                return false
+            else
+                return true
+        })
+        return (thisValues)
     }
 
-    renderLocations=()=>{
-        let locations=this.state.locations;
-        return(
-            <form>
-                {
-                    this.state.locations.map((loc,index)=>(
-                        <div>
-                            {/*<label >*/}
-                            {/*    <input type="checkbox" onChange={()=>{this.changeToFinish(index)}}/>*/}
-                            {/*    <span >{loc.address}</span>*/}
-                            {/*</label>*/}
-                            <tr>
-                                <td>{<input style={{"width":"auto"}} type="checkbox" onChange={()=>{this.changeToFinish(index)}}/>}</td>
-                                <td style={{"padding":"0 0 0 30%"}}>{loc.address}</td>
-                            </tr>
-                        </div>
-                    ))
+    const monthlyChart = async () => {
+        await fetch("/statistics.json")
+            .then((res) => res.json())
+            .then((data1) => {
+
+                console.log(data1)
+                    setData(makeNormalDate(filterMonth(data1)));
+
+
                 }
-                <button onClick={this.updateLocations}>submit</button>
-            </form>
-        )
+            );
     }
 
-  render() {
-    return (
-      <div>
-          <MyMapComponent
-              isMarkerShown
-              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-              selectedMarker={this.state.selectedMarker}
-              markers={this.state.locations}
-              onClick={this.handleClick}
-          />
+    const replaceAreaWithDate=(data)=>{
+        const areas=[...new Set(data.map(obj=>obj.area))]
+        const newData=areas.map(area=>{
+            const areaLocations=data.filter(d=>d.area===area)
+            const distributed=areaLocations.filter(a=>a.finished).length
+            const not_distributed=areaLocations.filter(a=>!a.finished).length
+            return{
+                date:area,distributed:distributed,not_distributed:not_distributed
+            }
+        })
+        return(newData)
+    }
+    const daylyChart = async () => {
+        await fetch("/daily-distribution.json")
+            .then((res) => res.json())
+            .then((data1) => {
 
-          {this.renderLocations()}
-
-      {/*  <h2>HELLO</h2>*/}
-
+                console.log(data1)
+                    setData(replaceAreaWithDate(data1));
 
 
-      {/*  <p>Cras facilisis urna ornare ex volutpat, et*/}
-      {/*  convallis erat elementum. Ut aliquam, ipsum vitae*/}
-      {/*  gravida suscipit, metus dui bibendum est, eget rhoncus nibh*/}
-      {/*  metus nec massa. Maecenas hendrerit laoreet augue*/}
-      {/*  nec molestie. Cum sociis natoque penatibus et magnis*/}
-      {/*  dis parturient montes, nascetur ridiculus mus.</p>*/}
+                }
+            );
+    }
 
-      {/*  <p>Duis a turpis sed lacus dapibus elementum sed eu lectus.</p>*/}
-      </div>
-    );
-  }
+    const weeklyChart = async () => {
+        await fetch("/statistics.json")
+            .then((res) => res.json())
+            .then((data1) => {
+                console.log(data1)
+                setData(makeNormalDate(filterWeek(data1)));
+                }
+            );
+    }
+
+
+    return <>
+        <ColorButton onClick={()=>daylyChart()}>Dayly</ColorButton>
+        <ColorButton onClick={() => weeklyChart()}>Weekly</ColorButton>
+        <ColorButton onClick={() => monthlyChart()}>monthly</ColorButton>
+        <MyChart data={data}></MyChart>
+
+
+    </>
 }
- 
-export default Statistics;

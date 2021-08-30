@@ -22,10 +22,6 @@ class GiveConfirmation extends Component {
             ]})
 
     }
-    // handleClick = (marker, event) => {
-    //     // console.log({ marker })
-    //     this.setState({ selectedMarker: marker })
-    // }
 
     changeToFinish=(index)=>{
         let newLocations=this.state.locations

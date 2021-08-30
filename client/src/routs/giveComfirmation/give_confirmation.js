@@ -22,7 +22,6 @@ export const GiveConfirmation=()=>{
         },
         body: JSON.stringify(b)
     };
-    console.log(options.body)
     await fetch("/getLocationsByEmail",options).then((response)=>response.json()).then(response=>{
         setLocations(response);
         setFlag(true);
@@ -33,7 +32,6 @@ export const GiveConfirmation=()=>{
         let newLocations=locations
         newLocations.map(loc=>rows.find(row=>row._id===loc._id)?loc.finished=!loc.finished:loc)//[index].finished=!newLocations[index].finished
         setLocations(newLocations)
-        console.log(newLocations)
     }
 
     const onSelectionChange=(rows)=>{
@@ -73,7 +71,6 @@ changeToFinish(rows)
     }
 
     const handleClick = (marker, event) => {
-        // console.log({ marker })
         this.setState({ selectedMarker: marker })
     }
 

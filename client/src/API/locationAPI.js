@@ -2,7 +2,6 @@
 
 
 const updateLocation=async(location)=>{
-    console.log(location)
     const options = {
         method: 'POST',
         headers: {
@@ -15,7 +14,6 @@ const updateLocation=async(location)=>{
 
 }
 const addLocation=async(location)=>{
-    console.log(location)
     const options = {
         method: 'POST',
         headers: {

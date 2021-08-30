@@ -29,7 +29,6 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
       var dbo =  db.db("helpHend");
       dbo.collection("users").find({email:req.body.email}).toArray( async function(err, result) {
         if (err) throw err;
-        console.log(result);
         if(result.length!=0)
         {
           flag =true;
@@ -41,7 +40,6 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
      
         }
         else if (req.body.type == "manager"&&flag==false){
-          console.log(flag)
                   var x = await dbo.collection("users").insertOne(user);
                     setTimeout(() => { res.json({
                       status: 'success',
@@ -50,7 +48,6 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
                     }); }, 1000);       
                 }
                  else if (flag==false){
-                   console.log(flag)
                           user={
                             type: req.body.type,
                             fname: req.body.fname,
@@ -83,7 +80,6 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
 router.post('/updetUser',async function(req, res,next) {
 try{
   var user;
-  console.log(req.body)
   if(req.body.type == "manager"){
   user={
   type: req.body.type,
@@ -112,7 +108,6 @@ else{
     };
 
 }
-    console.log(user)
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
       var dbo = db.db("helpHend");
@@ -120,7 +115,6 @@ else{
       var newvalues = { $set: user};
       dbo.collection("users").updateOne(myquery, newvalues, function(err, result) {
         if (err) throw err;
-        console.log("1 document updated");
         db.close();
       });
   
@@ -135,7 +129,6 @@ else{
 
 router.post('/deleteUser',async function(req, res,next) {
   try{
-    console.log(req.body)
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("helpHend");
@@ -143,7 +136,6 @@ router.post('/deleteUser',async function(req, res,next) {
     var newvalues = { $set: {status: "0"} };
     dbo.collection("users").updateOne(myquery, newvalues, function(err, result) {
       if (err) throw err;
-      console.log("1 document updated");
       db.close();
     });
   });
@@ -168,8 +160,6 @@ router.post('/updateGiverWithArea',async function(req, res,next) {
     var newvalues = { $set: {area: req.body.area} };
     await dbo.collection("users").updateOne(myquery, newvalues, async function(err, result) {
       if (err) throw err;
-      console.log(result)
-    console.log("1 document updated");  
     await db.close();
     });
   });
@@ -181,8 +171,6 @@ router.post('/updateGiverWithArea',async function(req, res,next) {
       var newvalues = { $set: {id_user: req.body._id} };
     await dbo.collection("daily-distribution").updateMany(myquery, newvalues, function(err, result) {
       if (err) throw err;
-      console.log(result)
-      console.log("documents updated");
        db.close();
     });
   });

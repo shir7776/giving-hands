@@ -101,7 +101,6 @@ export const AssignGivers = (props) => {
         return lst;
     }
     const handleClick = (marker, event) => {
-        console.log({marker})
         setSelectedMarker(marker)
     }
     return flag&&flag2?(

@@ -17,18 +17,12 @@ export const GiversManagement = () => {
     }, []);
 
     const getGiversList = () => givers
-    console.log(givers)
 
     const updateGiver = async (giver) => {
         await giversAPI.updateGiver(giver)
-        console.log("hahahahh")
     }
     const addGiver = async (giver) => {
         const mes = await giversAPI.addGiver(giver)
-        console.log(mes);
-        //const ls = await giversAPI.getDaylyGivers();
-        //console.log(ls);
-        //await giversAPI.updateGiverWithArea({_id:"6127675a20371c5d10ccf60a",area:"1"})
     }
     const deleteGiver = async (giver) => {
         await giversAPI.deleteGiver(giver)

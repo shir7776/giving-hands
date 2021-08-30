@@ -38,24 +38,6 @@ export const Blog = ({type}) => {
         );
     }, []);
 
-//     React.useEffect(async() => {
-//         const date =new Date();
-//        var creationTime =date.valueOf();
-//         console.log(creationTime);
-//         const ans={title,content,userEmail,creationTime};
-//             const options = {
-//                 method: 'POST',
-//                 headers: {
-//                 'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(ans)
-//             };
-//             console.log("befor fetch")
-//             await fetch("/addNewBlog",options);
-//    }, []);
-    
-    
-
     const renderPosts = () => {
         return (<div className={styles.blog}>
             <ul className='tickets'>

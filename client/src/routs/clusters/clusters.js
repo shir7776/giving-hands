@@ -10,7 +10,7 @@ export const Clusters = () => {
 
 
     React.useEffect(async () => {
-        await fetch("/users.json")
+        await fetch("/givers.json")
             .then((res) => res.json())
             .then((data1) => {
                     setGivers(data1);
@@ -20,7 +20,6 @@ export const Clusters = () => {
             await fetch("/addresses-for-distribution.json")
             .then((res) => res.json())
             .then((data1) => {
-                console.log(data1)
                 setLocations(data1);
                     setFlag2(true)
                 }

@@ -29,14 +29,11 @@ export const LocationManagement = () => {
         let newQuary = quary.split(" ")
         newQuary = newQuary.join("%20")
         let url = 'https://us1.locationiq.com/v1/search.php?key=pk.32ce82cfe3f662e3b6a89ac046a5b6fa&q=' + newQuary + '&format=json'
-        console.log(url)
         return await fetch(url)
             .then(response => response.json())
             .then(data => {
                     return data[0]
                     setNewLocation({...data[0]})
-                    console.log("location after")
-                    console.log(newLocation)
                 }
             );
         return newLocation
@@ -84,13 +81,11 @@ export const LocationManagement = () => {
         await locationAPI.deleteLocation(location);
     }
     const handleClick = (marker, event) => {
-        // console.log({ marker })
         setSelectedMarker(marker)
     }
 
     
-    console.log("result", locationList)
-    return (
+    return flag?(
         
         <div>
             <MyMapComponent
@@ -103,7 +98,7 @@ export const LocationManagement = () => {
                 markers={locationList}
                 onClick={handleClick}
             />
-           {flag? <Table
+            <Table
                 name={"Location Management"}
                 data={getLocations()}//I REPLACED THIS FUNCTION IF THERE IS A PROBLEM GO SEA THE ORIGINAL LOCATIONMANAGEMENT FILE
                 columns={getLocationsColumns()}
@@ -111,10 +106,10 @@ export const LocationManagement = () => {
                 delete={deleteLocation}
                 add={addLocation}
             />:
-            <h2>Loading...</h2> }
+            
 
         </div>
             
-    );
+    ) : <h2>Loading...</h2> ;
 
 }

@@ -10,7 +10,6 @@ var mongoose = require('mongoose');
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
 router.post('/addNewAddress',async function(req, res,next) {
-    console.log("in adding new address")
     try{
       var address={
         address:req.body.address,
@@ -26,7 +25,6 @@ router.post('/addNewAddress',async function(req, res,next) {
         var myQray={lat:req.body.lat, lng:req.body.lng,status:"1"};
         dbo.collection("addresses-for-distribution").find(myQray).toArray( async function(err, result) {
           if (err) throw err;
-          console.log(result);
           if(result.length!=0)
           {
             flag=false;
@@ -49,7 +47,6 @@ router.post('/addNewAddress',async function(req, res,next) {
   });
 
 router.post('/updateAddress',async function(req, res,next) {
-  console.log(req.body);
     try{
       var address={
           address:req.body.address,
@@ -64,7 +61,6 @@ router.post('/updateAddress',async function(req, res,next) {
        var newvalues = { $set: address};
        dbo.collection("addresses-for-distribution").updateOne(myquery, newvalues, function(err, result) {
          if (err) throw err;
-         console.log(result);
          db.close();
          res.json(result);
        });

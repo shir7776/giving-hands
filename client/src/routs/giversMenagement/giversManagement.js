@@ -53,11 +53,9 @@ class GiversManagement extends Component {
     }
     updateGiver=(lst)=>
     {
-        console.log("hahahahh")
     }
     addGiver=(lst)=>
     {
-        console.log("hahahahh")
     }
     deleteGiver=(lst)=>
     {

@@ -42,7 +42,6 @@ export class MyMapComponent extends Component {
         }
     }
  handleClick = (marker, event) => {
-    // console.log({ marker })
     this.setState({ selectedMarker: marker })
 }
 

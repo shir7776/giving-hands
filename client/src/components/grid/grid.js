@@ -97,10 +97,8 @@ export function SpacingGrid({givers, locations}) {
                                    onSelectionChange={onLocationSelectionChange}/>
                         </Paper>
                     </Grid>
-                    <Grid item>
-                        <Paper className={style.paper}>
-                            <Button onClick={onClick}>get me the areas</Button>
-                        </Paper>
+                    <Grid item className={style.buttonHolder}>
+                            <Button className={style.button} onClick={onClick}>get me the areas</Button>
                     </Grid>
 
                 </Grid>

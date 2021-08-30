@@ -1,5 +1,8 @@
 import React, { useState,Component } from 'react';
 import MaterialTable from 'material-table';
+import {MuiThemeProvider} from "@material-ui/core";
+import { createMuiTheme } from '@material-ui/core/styles';
+
 
 export class Table extends Component {
     constructor(props) {
@@ -14,12 +17,24 @@ export class Table extends Component {
         }
         console.log(this.state.columns)
     }
+     theme = createMuiTheme({
+        palette: {
+            primary: {
+                main: '#4caf50',
+            },
+            secondary: {
+                main: 'rgba(82, 103, 207, 0.73)',
+            },
+        },
+
+    });
     render() {
 
 
         // const [data, setData] = useState(givers)
         return (
             <div>
+                <MuiThemeProvider theme={this.theme}>
                 <MaterialTable title={this.state.name}
                                data={this.state.data}
                                columns={this.state.columns}
@@ -68,13 +83,14 @@ export class Table extends Component {
                                options={{
                                    actionsColumnIndex: -1, addRowPosition: "first",filtering:true, selection:this.props.selection
                                }}
-                               style={{"backgroundColor":"#f7fafb"}}
+                               style={{"backgroundColor":"#f7fafb","min-height":"520px"}}
                                onSelectionChange={(rows) => {
                                this.props.onSelectionChange(rows)
                                }
                                }
 
                 />
+                </MuiThemeProvider>
             </div>
         );
     };

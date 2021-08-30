@@ -6,6 +6,8 @@ import ShowMore from 'react-show-more';
 import {NewPost} from "../../components/blog/newPost";
 import {Post} from "../../components/blog/post";
 import {BlogAPI} from "../../API/blogAPI";
+import loadingGIF from "../../loading.gif";
+import {Loading} from "../../components/loading/loading";
 
 export const Blog = ({type}) => {
     //
@@ -68,7 +70,7 @@ export const Blog = ({type}) => {
                     addNewPost={addNewPost}/>}
             </header>}
             <div>
-                { flag ? renderPosts() : <h2>Loading..</h2>}
+                { flag ? renderPosts() : <Loading/>}
 
             </div>
             </body>

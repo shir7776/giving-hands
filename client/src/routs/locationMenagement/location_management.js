@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import MyMapComponent from "../../components/map/map_component";
 import Table from "../../components/table/table_component";
 import {locationAPI} from "../../API/locationAPI";
+import loadingGIF from "../../loading.gif";
+import {Loading} from "../../components/loading/loading";
 
 export const LocationManagement = () => {
     
@@ -43,7 +45,7 @@ export const LocationManagement = () => {
     const getLocationsColumns = () => {
         let lst = [
             {
-                title: 'Address', field: 'address'
+                title: 'Address', field: 'address',validate: rowData => rowData.address === '' ? 'Address cannot be empty' : ''
             },
             {
                 title: 'Latitude', field: 'lat'
@@ -123,6 +125,6 @@ export const LocationManagement = () => {
 
         </div>
             
-    ) : <h2>Loading...</h2> ;
+    ) :<Loading/> ;
 
 }

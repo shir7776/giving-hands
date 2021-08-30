@@ -3,6 +3,8 @@ import MyMapComponent from "../../components/map/map_component";
 import {locationAPI} from "../../API/locationAPI";
 import Table from "../../components/table/table_component";
 import {ColorButton} from "../../components/button/ColorButton";
+import loadingGIF from "../../loading.gif";
+import {Loading} from "../../components/loading/loading";
 
 export const GiveConfirmation=()=>{
     
@@ -48,7 +50,7 @@ changeToFinish()//this is wired
     const getLocationsColumns = () => {
         let lst = [
             {
-                title: 'Address', field: 'name_addr'
+                title: 'Address', field: 'name_addr',editable:false
             },
         ];
         return lst;
@@ -92,7 +94,7 @@ changeToFinish()//this is wired
 
 
         </div> 
-    ):<h2>Loading...</h2>;
+    ):<Loading/>;
 
 
 

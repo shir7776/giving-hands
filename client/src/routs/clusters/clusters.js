@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 //import { options } from "../../../../server/routes/clusterAlg";
 import {SpacingGrid} from "../../components/grid/grid";
+import loadingGIF from "../../loading.gif";
+import {Loading} from "../../components/loading/loading";
 
 export const Clusters = () => {
     const [givers, setGivers] = useState([])
@@ -31,7 +33,7 @@ export const Clusters = () => {
         <div>
 
 
-            {flag&&flag2?<SpacingGrid givers={givers} locations={locations}/>:<h2>Loading...</h2>}
+            {flag&&flag2?<SpacingGrid givers={givers} locations={locations}/>:<Loading/>}
 
         </div>
 

@@ -73,9 +73,7 @@ changeToFinish(rows)
     const handleClick = (marker, event) => {
         this.setState({ selectedMarker: marker })
     }
-    const bbb=async()=>{
-        await fetch("/statisticsWeek.json");
-    }
+    
 
     return flag?(
          <div>
@@ -89,7 +87,6 @@ changeToFinish(rows)
                 markers={locations}
                 onClick={handleClick}
             />
-            <button onClick={bbb}>bbbb</button>
 
             {renderLocations()}
 

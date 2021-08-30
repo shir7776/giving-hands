@@ -42,7 +42,7 @@ router.post('/clusterAlg', async function(req, res, next) {
             for(let j=0;j<a.length;j++){
                let userByAdd={
                   "id_user":"",
-                  "area":numberArea,
+                  "area":string(numberArea),
                   "name_addr":a[j],
                   "finished":false,
                   "lat":lngLat[j][0],

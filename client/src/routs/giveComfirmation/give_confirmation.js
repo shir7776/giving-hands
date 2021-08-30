@@ -44,6 +44,7 @@ changeToFinish(rows)
     }
     const updateLocations=async()=>{
         await locationAPI.deleteDailyDeliv({locations:selectedLocations});
+        window.location.reload(true);
         //writing locations back to database
     }
     const getLocationsColumns = () => {

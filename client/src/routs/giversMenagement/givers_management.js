@@ -38,9 +38,6 @@ export const GiversManagement = () => {
     const getGiversColumns = () => {
         let lst = [
             {
-                title: 'ID', field: '_id', editable: false
-            },
-            {
                 title: 'First Name', field: 'fname'
             },
             {

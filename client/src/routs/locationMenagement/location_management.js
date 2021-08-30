@@ -46,9 +46,6 @@ export const LocationManagement = () => {
     const getLocationsColumns = () => {
         let lst = [
             {
-                title: 'ID', field: '_id', editable: false
-            },
-            {
                 title: 'Address', field: 'address'
             },
             {
@@ -81,6 +78,7 @@ export const LocationManagement = () => {
         else{
             alert("could not find this address :(")
         }
+        window.location.reload(true);
     }
     const deleteLocation = async(location) => {
         await locationAPI.deleteLocation(location);

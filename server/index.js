@@ -45,6 +45,9 @@ app.use("", chat);
 const address_meng = require("./routes/address_meng");
 app.use("", address_meng);
 
+const satistic_meng = require("./routes/satistic_meng");
+app.use("", satistic_meng);
+
 app.listen(PORT, () => {
     console.log(`Server listening on 111 ${PORT}`);
 });

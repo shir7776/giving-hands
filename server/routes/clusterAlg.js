@@ -24,7 +24,7 @@ router.post('/clusterAlg', async function(req, res, next) {
     }
     var DivByDatelist=[]  
     if(addresses.length>users.length){
-        kmeans.clusterize(vectors,{k: users.length }, async (err,result) => {
+       await kmeans.clusterize(vectors,{k: users.length }, async (err,result) => {
             if (err){
                throw err;
               
@@ -35,7 +35,7 @@ router.post('/clusterAlg', async function(req, res, next) {
             let vectorsBit=[];     
             for(let j = 0 ; j < result[i].clusterInd.length ; j++)
             {
-               a.push(addresses[result[i].clusterInd[j]]._id)
+               a.push(addresses[result[i].clusterInd[j]].address)
                lngLat.push([addresses[result[i].clusterInd[j]].lat,addresses[result[i].clusterInd[j]].lng])
                vectorsBit[j]=0;
             }
@@ -54,32 +54,14 @@ router.post('/clusterAlg', async function(req, res, next) {
             numberArea++;
         }
         numberArea=numberArea-1;
-        for(let j=0;j<DivByDatelist.length;j++)
-        {
-         await MongoClient.connect(url, async function(err, db) {
-            if (err) throw err;
-            var dbo = db.db("helpHend");
-            var myquery ={_id:mongoose.Types.ObjectId(DivByDatelist[j].name_addr)}
-            await dbo.collection("addresses-for-distribution").find(myquery).toArray(async function(err, result) {
-               if (err) throw err;
-               DivByDatelist[j].name_addr=result[0].address;
-               await db.close();
-             });
-          });
-
-        }
-        console.log(DivByDatelist)
+        
         await MongoClient.connect(url, async function(err, db) {
          if (err) throw err;
          var dbo = db.db("helpHend");
          var x = await dbo.collection("daily-distribution").deleteMany({});
-         await db.close();
-       });
-
-        await MongoClient.connect(url, async function(err, db) {
-         if (err) throw err;
-         var dbo = db.db("helpHend");
+         console.log("in deleting")
          var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
+         console.log("in inser")
          await db.close();
        });
 

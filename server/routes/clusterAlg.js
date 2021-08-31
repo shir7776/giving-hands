@@ -10,7 +10,22 @@ var mongoose = require('mongoose');
 //var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority"
 
-
+const help=async(users)=>{
+   for(let i=0;i<users.length;i++){
+      await MongoClient.connect(url, async function(err, db) {
+         if (err) throw err;
+         var dbo = db.db("helpHend");
+      var myquery ={_id:mongoose.Types.ObjectId(users[i]._id)}
+      var newvalues={$set:{workToday:true}}
+      await dbo.collection("users").updateOne(myquery, newvalues, async function(err, result) {
+         if (err) throw err;
+         console.log("bbbbb")
+         await db.close();
+      });
+      
+    });
+   }
+}
 
 router.post('/clusterAlg', async function(req, res, next) {
     try{
@@ -62,22 +77,19 @@ router.post('/clusterAlg', async function(req, res, next) {
          console.log("in deleting")
          var x = await dbo.collection("daily-distribution").insertMany(DivByDatelist);
          console.log("in inser")
-         await db.close();
+         await dbo.collection("users").updateMany({workToday:true,type:"giver"},{$set:{workToday:false}},
+          async function(err, result) {
+            if (err) 
+               throw err;
+            console.log("in update many")
+            await help(users);
+            await db.close();
+          }); 
        });
-
-      for(let i=0;i<users.length;i++){
-            await MongoClient.connect(url, async function(err, db) {
-               if (err) throw err;
-               var dbo = db.db("helpHend");
-            var myquery ={_id:mongoose.Types.ObjectId(users[i]._id)}
-            var newvalues={$set:{workToday:true}}
-               await dbo.collection("users").updateOne(myquery, newvalues,async function(err, result) {
-                  if (err) throw err;
-                  await db.close();
-               });
-            });
-      }
-      });
+      
+      
+      
+   });
 res.send(true);
 }
 else{

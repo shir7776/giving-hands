@@ -48,6 +48,9 @@ app.use("", address_meng);
 const satistic_meng = require("./routes/satistic_meng");
 app.use("", satistic_meng);
 
+const initialization = require("./routes/initialization");
+app.use("", initialization);
+
 app.listen(PORT, () => {
     console.log(`Server listening on 111 ${PORT}`);
 });

@@ -24,14 +24,6 @@ export const Post=({post})=>{
                                 null}
                         </div>
                     </td>
-                    <td>
-                        <form className="sendMail">
-                            <textarea id="styled"
-                                      placeholder={"send a response to " + post.userEmail.split("@")[0] + " via email"}
-                            ></textarea>
-                            <button>send</button>
-                        </form>
-                    </td>
                 </table>
             </footer>
         </li>)

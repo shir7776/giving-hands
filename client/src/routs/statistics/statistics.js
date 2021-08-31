@@ -31,7 +31,7 @@ export const Statistics = () => {
         return data.map(obj => {
             const date = new Date(obj.date)
 console.log('day',date.getDay(),date)
-            return {...obj, date: `${date.getDate()}/${date.getMonth()+1}`}
+            return {...obj, date: `${date.getDate()-1}/${date.getMonth()+1}`}
         })
     }
     const filterWeek = (data) => {

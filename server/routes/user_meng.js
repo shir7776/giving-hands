@@ -2,28 +2,42 @@ const User = require('../../models/users');
 const express = require('express');
 var router = express.Router();
 const bcrypt=require('bcrypt');
+var nodemailer = require('nodemailer');
 
 var MongoClient = require('mongodb').MongoClient;
+
 var mongoose = require('mongoose');//var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 //var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority" 
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
+const sendMail=(email,password)=>{
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'S.Hflowers.inc@gmail.com',
+      pass: 'dudezwqpctgazibo'
+    }
+  });
+  var mailOptions = {
+    from: 'noreply@gmail.com',
+    to: email,
+    subject: 'Helping Hands support',
+    text: 'Thank you, your password is: '+password+ '\n\n\n Helping Hands Support Team'
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+
+    }
+  });
+}
 
  router.post('/addNewUser',async function(req, res,next) {
   try{
     var flag=false;
-    var user={
-      type: req.body.type,
-      fname: req.body.fname,
-      lname: req.body.lname,
-      address: req.body.address,
-      salery:req.body.salary,
-      age:req.body.age,
-      phone_number: req.body.phone_number,
-      email: req.body.email,
-      password: req.body.password,
-      status : "1",
-      };
+    
      await MongoClient.connect(url, async function(err, db) {
       if (err) throw err;
       var dbo =  db.db("helpHend");
@@ -40,7 +54,21 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
      
         }
         else if (req.body.type == "manager"&&flag==false){
+          var password= Math.floor(10000000+Math.random()*90000000);
+          var user={
+            type: req.body.type,
+            fname: req.body.fname,
+            lname: req.body.lname,
+            address: req.body.address,
+            salery:req.body.salary,
+            age:req.body.age,
+            phone_number: req.body.phone_number,
+            email: req.body.email,
+            password: await bcrypt.hash(String(password),10),
+            status : "1",
+            };
                   var x = await dbo.collection("users").insertOne(user);
+          sendMail(req.body.email,password)
                     setTimeout(() => { res.json({
                       status: 'success',
                       data:'true',
@@ -48,6 +76,8 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
                     }); }, 1000);       
                 }
                  else if (flag==false){
+                  var password= Math.floor(10000000+Math.random()*90000000);
+                  
                           user={
                             type: req.body.type,
                             fname: req.body.fname,
@@ -57,12 +87,13 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
                             age:req.body.age,
                             phone_number: req.body.phone_number,
                             email: req.body.email,
-                            password: req.body.password,
+                            password: await bcrypt.hash(String(password),10),
                             status : "1",
                             workToday:false,
                             area:"0"
                             };
                             var x = await dbo.collection("users").insertOne(user);
+                            sendMail(req.body.email,password)
                             setTimeout(() => { res.json({
                               status: 'success',
                               data:'true',
@@ -90,7 +121,6 @@ try{
   age:req.body.age,
   phone_number: req.body.phone_number,
   email: req.body.email,
-  password: req.body.password
   };
 }
 else{
@@ -103,7 +133,6 @@ else{
     age:req.body.age,
     phone_number: req.body.phone_number,
     email: req.body.email,
-    password: req.body.password,
     workToday: req.body.workToday
     };
 
@@ -111,7 +140,7 @@ else{
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
       var dbo = db.db("helpHend");
-      var myquery = { email: req.body.email };
+      var myquery = { _id: mongoose.Types.ObjectId(req.body._id) };
       var newvalues = { $set: user};
       dbo.collection("users").updateOne(myquery, newvalues, function(err, result) {
         if (err) throw err;

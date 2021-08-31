@@ -65,7 +65,7 @@ export const App = () => {
     return (
 
         !person ?
-            <Login setPerson={setPerson}/>
+            <Login setPerson={setPerson} person={person}/>
             :
 
 

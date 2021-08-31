@@ -1,8 +1,6 @@
 const express = require('express');
 var router = express.Router();
-// const bcrypt=require('bcrypt');
-
-
+const bcrypt=require('bcrypt');
 
 
 var MongoClient = require('mongodb').MongoClient;
@@ -21,22 +19,26 @@ router.post('/login',async function(req, res) {
             if (err) throw err;
             var dbo = db.db("helpHend");
             var myQray={email:email};
-            dbo.collection("users").find(myQray).toArray(function(err, result) {
+            dbo.collection("users").find(myQray).toArray(async function(err, result) {
               if (err) throw err;
-              if(result!=null&& password==result[0].password){
+              var flag=false;
+              await bcrypt.compare(password, result[0].password).then(function(result2) {
+                if(result!==null&& result2){
+                  res.json({
+                    status: 'success',
+                    data:'true',
+                    type:result[0].type,
+                    fname:result[0].fname,
+                    lname:result[0].lname
+                  });
+                }
+                else{
                  res.json({
-                   status: 'success',
-                   data:'true',
-                   type:result[0].type,
-                   fname:result[0].fname,
-                   lname:result[0].lname
-                 });
-               }
-               else{
-                res.json({
-                  status: 'faild',
-                  data:'false'});
-               }
+                   status: 'faild',
+                   data:'false'});
+                }  
+            });
+              
                db.close();
             });
           });

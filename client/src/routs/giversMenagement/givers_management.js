@@ -42,7 +42,8 @@ export const GiversManagement = () => {
             },
             {
                 title: 'Email', field: 'email',validate: rowData => rowData.email === '' ? 'Email cannot be empty' : ''
-            },{
+            },
+            {
                 title: 'Address', field: 'address',validate: rowData => rowData.address === '' ? 'Address cannot be empty' : ''
             },
             {

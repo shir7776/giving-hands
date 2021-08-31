@@ -10,9 +10,8 @@ var MongoClient = require('mongodb').MongoClient;
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
 
 
-schedule.scheduleJob('0 0 0 * * *', async() => { 
+schedule.scheduleJob('0 55 23 * * *', async() => { 
   try{
-    console.log("i do blaaaaaa")
     var countYes=0;
     var countNo=0;
     var myInsert;

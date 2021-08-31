@@ -4,6 +4,7 @@ var router = express.Router();
 const bcrypt=require('bcrypt');
 
 var MongoClient = require('mongodb').MongoClient;
+
 var mongoose = require('mongoose');//var url = "mongodb+srv://hodayara:hodayara@giving-hands.e9nsj.mongodb.net/helpHend";
 //var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend?retryWrites=true&w=majority" 
 var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHend";
@@ -21,7 +22,7 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
       age:req.body.age,
       phone_number: req.body.phone_number,
       email: req.body.email,
-      password: req.body.password,
+      password: await bcrypt.hash(req.body.password,10),
       status : "1",
       };
      await MongoClient.connect(url, async function(err, db) {
@@ -57,7 +58,7 @@ var url ="mongodb+srv://hodayara:hodayara@giving-hands.cztzd.mongodb.net/helpHen
                             age:req.body.age,
                             phone_number: req.body.phone_number,
                             email: req.body.email,
-                            password: req.body.password,
+                            password: await bcrypt.hash(req.body.password,10),
                             status : "1",
                             workToday:false,
                             area:"0"
@@ -111,7 +112,7 @@ else{
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
       var dbo = db.db("helpHend");
-      var myquery = { email: req.body.email };
+      var myquery = { _id: mongoose.Types.ObjectId(req.body._id) };
       var newvalues = { $set: user};
       dbo.collection("users").updateOne(myquery, newvalues, function(err, result) {
         if (err) throw err;

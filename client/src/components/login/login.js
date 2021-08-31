@@ -1,21 +1,26 @@
 import React, {useState} from "react";
 import {loginAPI} from "../../API/loginAPI";
+import { Loading } from "../loading/loading";
 
-export const Login = ({setPerson})=>{
+export const Login = ({setPerson,person})=>{
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
+    const [flag,setFlag]=useState(false)
     const login =async(email,password)=>{
-        const person= await loginAPI.login(email,password)
-        if(person){
-            setPerson(person)
+        setFlag(true);
+        const person2= await loginAPI.login(email,password)
+        console.log(person2)
+        if(person2){
+            setPerson(person2)
         }
         else{
+            setFlag(false)
             alert("wrong Email address or password :(")
         }
     }
     return (
         <div >
-            <div className="login-box">
+            {!flag?<div className="login-box">
                 <h2>Login</h2>
                 <form >
                     <div className="user-box" >
@@ -36,7 +41,7 @@ export const Login = ({setPerson})=>{
                         login
                     </a>
                 </form>
-            </div>
+            </div>:<Loading/>}
         </div>
     )
 }

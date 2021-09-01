@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {SpacingGrid} from "../../components/grid/grid";
 import style from './homePageStyle.module.css'
+import App from '../../../public/app'
+import {ChatApp} from "../../components/chat/chat";
 export const Home = () => {
 
     return (
         <div className={style.body}>
+            <ChatApp/>
             <h2 className={style.header}> Helping Hand</h2>
             <h3 className={style.content}>With each decade of life, we learn, we grow, we struggle, and hopefully, we triumph.
                 By the time we reach an old age, chances are we’re pretty doggone resilient. Not so

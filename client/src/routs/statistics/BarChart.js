@@ -5,7 +5,7 @@ import {
 } from 'victory';
 
 export const MyChart = ({data}) => {
-
+console.log(data)
     const Xcategiries = data.map(item => item.date)
     const distributed = data.map(item => [{
         x:item.date,

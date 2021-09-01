@@ -33,7 +33,7 @@ schedule.scheduleJob('0 55 23 * * *', async() => {
             else
             countNo++;
           }
-          myInsert= {date:new Date() ,distributed:countYes ,not_distributed:countNo}
+          myInsert= {"date":new Date() ,"distributed":countYes ,"not_distributed":countNo}
           console.log(myInsert)
           var x = await dbo.collection("statistics").insertOne(myInsert);
           var x = await dbo.collection("daily-distribution").deleteMany({});
